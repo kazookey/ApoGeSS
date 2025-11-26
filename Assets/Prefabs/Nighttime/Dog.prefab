@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5121112956896594138}
   - component: {fileID: 4372542218281864788}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Dog
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -175,6 +175,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d66a5709442f9e4db092c5266f09c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 4
   health: 2
   damagePerSecond: 1

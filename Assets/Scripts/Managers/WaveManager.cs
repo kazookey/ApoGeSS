@@ -3,6 +3,8 @@ using System.Collections;
 
 public class WaveManager : MonoBehaviour
 {
+    public static WaveManager Instance;
+
     public GameObject enemyPrefab;
     public Transform spawnPoint;
 
@@ -13,7 +15,13 @@ public class WaveManager : MonoBehaviour
     int currentWave = 0;
     public static int aliveEnemies = 0;
 
-    void Start()
+    void Awake()
+    {
+        Instance = this;
+    }
+
+   
+    public void BeginWaves()
     {
         StartCoroutine(StartNextWave());
     }
@@ -28,20 +36,20 @@ public class WaveManager : MonoBehaviour
             Debug.Log("Starting Wave " + currentWave);
             aliveEnemies = enemiesThisWave;
 
-            
+           
             for (int i = 0; i < enemiesThisWave; i++)
             {
                 Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
                 yield return new WaitForSeconds(spawnDelay);
             }
 
-            
+           
             while (aliveEnemies > 0)
                 yield return null;
 
             Debug.Log("Wave " + currentWave + " cleared!");
 
-            
+           
             yield return new WaitForSeconds(waveDelay);
         }
     }
