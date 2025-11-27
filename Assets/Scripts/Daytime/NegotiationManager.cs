@@ -5,124 +5,118 @@ using TMPro;
 public class NegotiationManager : MonoBehaviour
 {
     [Header("Dependencies")]
-    public DayManager dayManager; // To deduct time
+    public DayManager dayManager;
 
     [Header("UI Elements")]
     public GameObject panel;
-    public TextMeshProUGUI promptText; // "I want to sell you this Scrap"
-    public Slider priceSlider;
-    public TextMeshProUGUI offerValueText; // The number on the slider
+    public TextMeshProUGUI promptText; // "I have a [Item] to sell."
+    public TextMeshProUGUI marketValueText; // "Market Value: $100"
+    public Slider offerSlider;
+    public TextMeshProUGUI offerValueText; // "Your Offer: $80"
     public TextMeshProUGUI resultText;
+    
     public Button confirmButton;
+    public Button declineButton;
 
     private ItemData currentItem;
-    private bool isPlayerSelling; // True = Customer buying from us. False = We buy from Trader.
     private int basePrice;
 
     void Start()
     {
         panel.SetActive(false);
-        priceSlider.onValueChanged.AddListener(UpdateSliderText);
+        offerSlider.onValueChanged.AddListener(UpdateSliderText);
     }
 
-    // Call this to open the window
-    public void StartNegotiation(ItemData item, bool playerSelling)
+    public void OpenNegotiation(ItemData item)
     {
         currentItem = item;
-        isPlayerSelling = playerSelling;
         basePrice = item.baseValue;
 
         panel.SetActive(true);
         confirmButton.interactable = true;
+        declineButton.interactable = true;
         resultText.text = "";
 
-        // Set Slider Limits (50% to 200% of value)
-        priceSlider.minValue = basePrice * 0.5f;
-        priceSlider.maxValue = basePrice * 2.0f;
-        priceSlider.value = basePrice; // Default to fair price
+        // Setup UI
+        promptText.text = $"A Scavenger wants to sell <b>{item.itemName}</b>.";
+        marketValueText.text = $"Market Value: ${basePrice}";
 
-        if (isPlayerSelling)
-            promptText.text = $"Customer wants to buy {item.itemName}.";
-        else
-            promptText.text = $"Trader offers {item.itemName}.";
-            
-        UpdateSliderText(priceSlider.value);
+        // Slider limits: You can offer between $1 and 150% of value
+        offerSlider.minValue = 1;
+        offerSlider.maxValue = basePrice * 1.5f;
+        offerSlider.value = basePrice * 0.8f; // Default to a slight "deal" (80%)
+
+        UpdateSliderText(offerSlider.value);
     }
 
     void UpdateSliderText(float val)
     {
-        offerValueText.text = "$" + Mathf.RoundToInt(val).ToString();
+        offerValueText.text = $"Your Offer: ${Mathf.RoundToInt(val)}";
     }
 
     public void SubmitOffer()
     {
-        int offer = Mathf.RoundToInt(priceSlider.value);
-        bool success = CheckIfAccepted(offer);
+        int offerAmount = Mathf.RoundToInt(offerSlider.value);
 
-        if (success)
+        // Check if we even have the money
+        if (GameManager.Instance.credits < offerAmount)
         {
-            ProcessTransaction(offer);
-            resultText.text = "<color=green>Offer Accepted!</color>";
+            resultText.text = "<color=red>You don't have enough credits!</color>";
+            return;
+        }
+
+        bool accepted = CheckIfAccepted(offerAmount);
+
+        if (accepted)
+        {
+            // Transaction: Minus Money, Plus Item
+            GameManager.Instance.ModifyCredits(-offerAmount);
+            GameManager.Instance.AddItem(currentItem, 1);
+            
+            resultText.text = "<color=green>Deal Accepted!</color>";
+            EndInteraction();
         }
         else
         {
-            resultText.text = "<color=red>They refused and left!</color>";
+            resultText.text = "<color=red>They refused your low offer and left.</color>";
+            EndInteraction();
         }
-
-        confirmButton.interactable = false;
-        
-        // Close window after short delay and advance time
-        Invoke(nameof(CloseNegotiation), 2f);
     }
 
+    public void DeclineTrade()
+    {
+        resultText.text = "You rejected the offer.";
+        EndInteraction();
+    }
+
+    private void EndInteraction()
+    {
+        confirmButton.interactable = false;
+        declineButton.interactable = false;
+        
+        // Wait 2 seconds, then close and advance time
+        Invoke(nameof(ClosePanel), 2f);
+    }
+
+    private void ClosePanel()
+    {
+        panel.SetActive(false);
+        dayManager.AdvanceTime(1); // Spending time negotiating
+    }
+
+    // --- THE LOGIC ---
+    // If you offer Market Value (100%), chance is 100%.
+    // If you offer 50%, chance is 50%.
+    // If you offer 1%, chance is 1%.
     bool CheckIfAccepted(int offer)
     {
         float ratio = (float)offer / basePrice;
-        float chance = 1.0f;
-
-        // Logic: 
-        // If we are Buying, offering LOW decreases chance.
-        // If we are Selling, asking HIGH decreases chance.
         
-        if (!isPlayerSelling) // Buying
-        {
-            if (ratio < 1.0f) chance = ratio; // Simple linear drop-off
-        }
-        else // Selling
-        {
-            if (ratio > 1.0f) chance = 1.0f - (ratio - 1.0f);
-        }
+        // Bonus: If you have high reputation, add 10% to the success chance
+        float reputationBonus = (GameManager.Instance.reputation / 100f) * 0.10f;
+        
+        float successChance = ratio + reputationBonus;
 
-        // Reputation Bonus (Optional)
-        chance += (GameManager.Instance.reputation / 100f) * 0.1f; 
-
-        return Random.value <= chance;
-    }
-
-    void ProcessTransaction(int price)
-    {
-        if (isPlayerSelling)
-        {
-            GameManager.Instance.ModifyCredits(price);
-            GameManager.Instance.AddItem(currentItem, -1); // Remove from stock
-        }
-        else
-        {
-            if (GameManager.Instance.ModifyCredits(-price))
-            {
-                GameManager.Instance.AddItem(currentItem, 1); // Add to stock
-            }
-            else
-            {
-                resultText.text = "Not enough cash!";
-                return;
-            }
-        }
-    }
-
-    void CloseNegotiation()
-    {
-        panel.SetActive(false);
-        dayManager.AdvanceTime(1); // Takes 1 "Time Slot" to negotiate
+        return Random.value <= successChance;
     }
 }

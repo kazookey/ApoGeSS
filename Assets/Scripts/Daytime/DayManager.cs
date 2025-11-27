@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.UI; // For Image/Text UI
-using TMPro; // Assuming you use TextMeshPro
+using UnityEngine.UI;
+using TMPro; // Ensure you have TextMeshPro installed
 
 public class DayManager : MonoBehaviour
 {
@@ -9,15 +9,15 @@ public class DayManager : MonoBehaviour
     public int currentTimeSlot = 0;
     
     [Header("UI References")]
-    public TextMeshProUGUI timeText; // Displays "Morning", "Afternoon", etc.
-    public Button endDayButton; // Only active when time is out
+    public TextMeshProUGUI timeText; // Displays "Morning", "Afternoon"
+    public Button endDayButton; // Only active when the day is over
 
     private string[] timeLabels = { "Morning", "Noon", "Afternoon", "Evening" };
 
     void Start()
     {
         UpdateTimeUI();
-        endDayButton.interactable = false; // Cannot leave early (optional)
+        endDayButton.interactable = false; // Cannot leave early
     }
 
     // Call this function when an action (Negotiation, Restock) is finished
@@ -46,13 +46,12 @@ public class DayManager : MonoBehaviour
     {
         Debug.Log("The sun has set. Prepare for night.");
         endDayButton.interactable = true;
-        // You might auto-trigger the transition here if you prefer
     }
 
-    // Linked to the "End Day" button
+    // Link this to your "End Day" button in the Inspector
     public void GoToPreparationPhase()
     {
-        // Save logic here if needed
-        UnityEngine.SceneManagement.SceneManager.LoadScene("PreparationScene"); // Or whatever Ramon names it
+        // Add scene transition logic here later
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Nighttime"); 
     }
 }
