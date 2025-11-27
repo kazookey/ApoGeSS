@@ -1,13 +1,17 @@
 using UnityEngine;
 
-public class BearTrap : MonoBehaviour
+public class BearTrap : TrapBase
 {
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.CompareTag("Enemy"))
-        {
-            Enemy e = col.GetComponent<Enemy>();
-            e.moveSpeed = 0;
-        }
+        if (isActivated) return;
+        if (!col.CompareTag("Enemy")) return;
+
+        
+        Enemy e = col.GetComponent<Enemy>();
+        e.moveSpeed = 0;
+
+       
+        ActivateTrap();
     }
 }

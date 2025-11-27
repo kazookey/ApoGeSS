@@ -3,6 +3,9 @@ using UnityEngine;
 public class TrapPlacementManager : MonoBehaviour
 {
     public static TrapPlacementManager Instance;
+    public void SelectBarrel(GameObject prefab)   { selectedTrap = prefab; }
+    public void SelectBearTrap(GameObject prefab) { selectedTrap = prefab; }
+    public void SelectBattery(GameObject prefab)  { selectedTrap = prefab; }
 
     public GameObject selectedTrap;
 
@@ -11,12 +14,12 @@ public class TrapPlacementManager : MonoBehaviour
         Instance = this;
     }
 
-    public void SelectTrap(GameObject trap)
+    public void SelectTrap(GameObject trapPrefab)
     {
         if (NightManager.Instance.currentState != NightState.Preparation)
             return;
 
-        selectedTrap = trap;
+        selectedTrap = trapPrefab;
     }
 
     public void TryPlaceTrap(TrapSlot slot)

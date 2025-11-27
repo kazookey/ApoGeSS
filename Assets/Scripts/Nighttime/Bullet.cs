@@ -18,11 +18,13 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
         }
 
-         if (other.GetComponent<ExplosiveBarrel>())
-{
-    other.GetComponent<ExplosiveBarrel>().Explode();
-    Destroy(gameObject);
-}
+        var barrel = other.GetComponent<ExplosiveBarrel>();
+            if (barrel != null)
+            {
+                barrel.ActivateTrap();
+                Destroy(gameObject);
+            }
+
     }
 
 }

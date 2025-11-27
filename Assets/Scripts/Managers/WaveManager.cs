@@ -1,11 +1,20 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
+[System.Serializable]
+public class EnemyEntry
+{
+    public GameObject prefab;  
+    public int weight = 1;      
+}
 
 public class WaveManager : MonoBehaviour
 {
-    public static WaveManager Instance;
+    public List<EnemyEntry> enemyPool = new List<EnemyEntry>();
 
-    public GameObject enemyPrefab;
+        public static WaveManager Instance;
+
     public Transform spawnPoint;
 
     public int startingEnemies = 3;
@@ -39,7 +48,7 @@ public class WaveManager : MonoBehaviour
            
             for (int i = 0; i < enemiesThisWave; i++)
             {
-                Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
+                Instantiate(GetWeightedEnemy(), spawnPoint.position, Quaternion.identity);
                 yield return new WaitForSeconds(spawnDelay);
             }
 
@@ -58,4 +67,25 @@ public class WaveManager : MonoBehaviour
     {
         aliveEnemies--;
     }
+
+    GameObject GetWeightedEnemy()
+    {
+        int totalWeight = 0;
+
+        foreach (var e in enemyPool)
+            totalWeight += e.weight;
+
+        int roll = Random.Range(0, totalWeight);
+        int sum = 0;
+
+        foreach (var e in enemyPool)
+        {
+            sum += e.weight;
+            if (roll < sum)
+                return e.prefab;
+        }
+
+        return enemyPool[0].prefab; 
+    }
+
 }

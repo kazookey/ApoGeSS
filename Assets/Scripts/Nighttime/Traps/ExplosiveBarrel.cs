@@ -1,13 +1,15 @@
 using UnityEngine;
 
-public class ExplosiveBarrel : MonoBehaviour
+public class ExplosiveBarrel : TrapBase
 {
     public float radius = 1.5f;
     public int damage = 10;
-    public GameObject explosionEffect;
 
-    public void Explode()
+    public override void ActivateTrap()
     {
+        base.ActivateTrap();
+
+        
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius);
         foreach (var hit in hits)
         {
@@ -15,9 +17,7 @@ public class ExplosiveBarrel : MonoBehaviour
                 hit.GetComponent<Enemy>().TakeDamage(damage);
         }
 
-        if (explosionEffect != null)
-            Instantiate(explosionEffect, transform.position, Quaternion.identity);
-
-        Destroy(gameObject);
+        
+        Destroy(gameObject, 0.1f);
     }
 }

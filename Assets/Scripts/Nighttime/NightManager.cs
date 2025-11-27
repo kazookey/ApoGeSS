@@ -29,4 +29,17 @@ public class NightManager : MonoBehaviour
         currentState = NightState.Finished;
         Debug.Log("Night Finished!");
     }
+
+    public void OnStartNightButton()
+{
+    if (currentState != NightState.Preparation) return;
+
+    currentState = NightState.Wave;
+    WaveManager.Instance.BeginWaves();
+
+    
+    GameObject.Find("StartNightButton").SetActive(false);
+    GameObject.Find("TrapUI").SetActive(false);
+}
+
 }
