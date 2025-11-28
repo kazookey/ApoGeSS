@@ -3,30 +3,30 @@ using UnityEngine;
 public class TrapPlacementManager : MonoBehaviour
 {
     public static TrapPlacementManager Instance;
-    public void SelectBarrel(GameObject prefab)   { selectedTrap = prefab; }
-    public void SelectBearTrap(GameObject prefab) { selectedTrap = prefab; }
-    public void SelectBattery(GameObject prefab)  { selectedTrap = prefab; }
 
-    public GameObject selectedTrap;
+    public GameObject barrelPrefab;
+    public GameObject bearTrapPrefab;
+    public GameObject batteryPrefab;
+
+    private GameObject selectedTrap;
 
     void Awake()
     {
         Instance = this;
     }
 
-    public void SelectTrap(GameObject trapPrefab)
+    public void SelectTrap(GameObject prefab)
     {
-        if (NightManager.Instance.currentState != NightState.Preparation)
-            return;
-
-        selectedTrap = trapPrefab;
+        selectedTrap = prefab;
     }
 
     public void TryPlaceTrap(TrapSlot slot)
     {
-        if (selectedTrap == null) return;
+        if (slot.isOccupied || selectedTrap == null)
+            return;
 
-        slot.PlaceTrap(selectedTrap);
-        selectedTrap = null;
+        
+        Instantiate(selectedTrap, slot.transform.position, Quaternion.identity);
+        slot.isOccupied = true;
     }
 }

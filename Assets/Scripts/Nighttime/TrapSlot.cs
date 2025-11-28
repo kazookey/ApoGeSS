@@ -2,23 +2,33 @@ using UnityEngine;
 
 public class TrapSlot : MonoBehaviour
 {
-    public bool occupied = false;
-    public GameObject currentTrap;
+    public bool isOccupied = false;
+    private SpriteRenderer highlight;
 
-    public void PlaceTrap(GameObject trapPrefab)
+    void Awake()
     {
-        if (occupied) return;
-
-        currentTrap = Instantiate(trapPrefab, transform.position, Quaternion.identity);
-        occupied = true;
+        highlight = GetComponentInChildren<SpriteRenderer>();
+        highlight.enabled = false;
     }
-    
+
+    void OnMouseEnter()
+    {
+        if (!isOccupied && NightManager.Instance.currentState == NightState.Preparation)
+            highlight.enabled = true;
+    }
+
+    void OnMouseExit()
+    {
+        highlight.enabled = false;
+    }
+
     void OnMouseDown()
-{
-    if (NightManager.Instance.currentState != NightState.Preparation)
-        return;
+    {
+       
+        if (NightManager.Instance.currentState != NightState.Preparation)
+            return;
 
-    TrapPlacementManager.Instance.TryPlaceTrap(this);
-}
-
+       
+        TrapPlacementManager.Instance.TryPlaceTrap(this);
+    }
 }
