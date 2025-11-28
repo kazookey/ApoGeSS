@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening; // IMPORTANT: Requires DOTween
 
 public class NegotiationManager : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class NegotiationManager : MonoBehaviour
 
     [Header("UI Elements")]
     public GameObject panel;
+    public CanvasGroup negotiationCanvasGroup; // Used for fading
+    
     public TextMeshProUGUI promptText; // "I have a [Item] to sell."
     public TextMeshProUGUI marketValueText; // "Market Value: $100"
     public Slider offerSlider;
@@ -23,7 +26,17 @@ public class NegotiationManager : MonoBehaviour
 
     void Start()
     {
-        panel.SetActive(false);
+        // Ensure panel is hidden
+        if (negotiationCanvasGroup != null)
+        {
+            negotiationCanvasGroup.alpha = 0;
+            negotiationCanvasGroup.blocksRaycasts = false;
+        }
+        else
+        {
+            panel.SetActive(false);
+        }
+        
         offerSlider.onValueChanged.AddListener(UpdateSliderText);
     }
 
@@ -32,12 +45,15 @@ public class NegotiationManager : MonoBehaviour
         currentItem = item;
         basePrice = item.baseValue;
 
+        // 1. Enable GameObject
         panel.SetActive(true);
+        
+        // 2. Reset UI State
         confirmButton.interactable = true;
         declineButton.interactable = true;
         resultText.text = "";
 
-        // Setup UI
+        // 3. Setup Text/Slider
         promptText.text = $"A Scavenger wants to sell <b>{item.itemName}</b>.";
         marketValueText.text = $"Market Value: ${basePrice}";
 
@@ -47,6 +63,14 @@ public class NegotiationManager : MonoBehaviour
         offerSlider.value = basePrice * 0.8f; // Default to a slight "deal" (80%)
 
         UpdateSliderText(offerSlider.value);
+
+        // 4. Fade In Animation
+        if (negotiationCanvasGroup != null)
+        {
+            negotiationCanvasGroup.alpha = 0; // Start transparent
+            negotiationCanvasGroup.blocksRaycasts = true;
+            negotiationCanvasGroup.DOFade(1f, 0.5f);
+        }
     }
 
     void UpdateSliderText(float val)
@@ -78,7 +102,7 @@ public class NegotiationManager : MonoBehaviour
         }
         else
         {
-            resultText.text = "<color=red>They refused your low offer and left.</color>";
+            resultText.text = "<color=red>Refused!</color>";
             EndInteraction();
         }
     }
@@ -94,27 +118,35 @@ public class NegotiationManager : MonoBehaviour
         confirmButton.interactable = false;
         declineButton.interactable = false;
         
-        // Wait 2 seconds, then close and advance time
-        Invoke(nameof(ClosePanel), 2f);
+        // Wait 1.5 seconds, then close
+        Invoke(nameof(ClosePanel), 1.5f);
     }
 
     private void ClosePanel()
     {
-        panel.SetActive(false);
-        dayManager.AdvanceTime(1); // Spending time negotiating
+        if (negotiationCanvasGroup != null)
+        {
+            negotiationCanvasGroup.blocksRaycasts = false;
+            // Fade out, THEN disable object and advance time
+            negotiationCanvasGroup.DOFade(0f, 0.5f).OnComplete(() => 
+            {
+                panel.SetActive(false);
+                if(dayManager != null) dayManager.AdvanceTime(1);
+            });
+        }
+        else
+        {
+            panel.SetActive(false);
+            if(dayManager != null) dayManager.AdvanceTime(1);
+        }
     }
 
-    // --- THE LOGIC ---
-    // If you offer Market Value (100%), chance is 100%.
-    // If you offer 50%, chance is 50%.
-    // If you offer 1%, chance is 1%.
     bool CheckIfAccepted(int offer)
     {
         float ratio = (float)offer / basePrice;
         
-        // Bonus: If you have high reputation, add 10% to the success chance
+        // Bonus: Reputation helps slightly
         float reputationBonus = (GameManager.Instance.reputation / 100f) * 0.10f;
-        
         float successChance = ratio + reputationBonus;
 
         return Random.value <= successChance;
