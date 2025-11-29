@@ -11,6 +11,9 @@ public class DayManager : MonoBehaviour
     [Header("UI References")]
     public TextMeshProUGUI timeText; // Displays "Morning", "Afternoon"
     public Button endDayButton; // Only active when the day is over
+    
+    [Header("Dependencies")]
+    public SalesManager salesManager;
 
     private string[] timeLabels = { "Morning", "Noon", "Afternoon", "Evening" };
 
@@ -30,6 +33,13 @@ public class DayManager : MonoBehaviour
             currentTimeSlot = maxTimeSlots;
             EndOfDayReached();
         }
+        
+        if (salesManager != null)
+        {
+            salesManager.ProcessPassiveSales();
+        }
+
+        if (currentTimeSlot >= maxTimeSlots)
 
         UpdateTimeUI();
     }
