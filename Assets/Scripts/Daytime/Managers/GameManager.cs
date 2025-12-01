@@ -9,9 +9,15 @@ public class GameManager : MonoBehaviour
     public int currentDay = 1;
     public int credits = 150; // Starting money [cite: 114]
     public int reputation = 50; // Affects customer patience/offers
+    public ItemData testItem; //temporary
 
     // Inventory: Item -> Quantity
     public Dictionary<ItemData, int> inventory = new Dictionary<ItemData, int>();
+    
+    void Start()  //temporary
+    {
+        if(testItem != null) AddItem(testItem, 10);
+    }
 
     private void Awake()
     {

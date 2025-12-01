@@ -2298,6 +2298,7 @@ MonoBehaviour:
   currentDay: 1
   credits: 150
   reputation: 50
+  testItem: {fileID: 11400000, guid: bfdefa56776bcf54783088ff6bbcf2fe, type: 2}
 --- !u!114 &954706468
 MonoBehaviour:
   m_ObjectHideFlags: 0
