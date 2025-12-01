@@ -38,10 +38,8 @@ public class DayManager : MonoBehaviour
         {
             salesManager.ProcessPassiveSales();
         }
-
-        if (currentTimeSlot >= maxTimeSlots)
-
-        UpdateTimeUI();
+        
+        UpdateTimeUI(); 
     }
 
     void UpdateTimeUI()

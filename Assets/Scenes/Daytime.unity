@@ -1030,8 +1030,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 169}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -0.000013351, y: 223}
+  m_SizeDelta: {x: 385.2363, y: 146.9321}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &361664509
 MonoBehaviour:
@@ -2147,7 +2147,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &871907651
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2313,16 +2313,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   negotiationManager: {fileID: 954706465}
   dialogueManager: {fileID: 954706469}
-  possibleItemsToBuy:
-  - {fileID: 11400000, guid: 3217493a9764e554b9b87e35fa0a4e35, type: 2}
-  - {fileID: 11400000, guid: d730112b226001447a6052e7175b4710, type: 2}
-  - {fileID: 11400000, guid: bfdefa56776bcf54783088ff6bbcf2fe, type: 2}
-  defaultNpcPortrait: {fileID: 0}
-  npcIntroLines:
-  - Hey... got some good stuff here.
-  - Found this out in the wastes. You buying?
-  - Don't ask where I got this. Just give me a price.
-  - Need some quick cash. Take a look.
+  possibleTraders:
+  - {fileID: 11400000, guid: e2545abc71bb65b4b984837ced2d735c, type: 2}
+  - {fileID: 11400000, guid: df7cf58749349bd4b8f1e4d98023edc8, type: 2}
 --- !u!114 &954706469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3151,8 +3144,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 434, y: -268}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 409, y: -246.78}
+  m_SizeDelta: {x: 344.6796, y: 100.78}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1231780252
 MonoBehaviour:
@@ -3940,7 +3933,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1597833101}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 954706465}
+        m_TargetAssemblyTypeName: NegotiationManager, Assembly-CSharp
+        m_MethodName: SubmitOffer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1597833101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4224,8 +4229,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -122.61}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -0.000017166, y: -81}
+  m_SizeDelta: {x: 221.94, y: 84.612}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1707225316
 MonoBehaviour:
@@ -4534,8 +4539,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -0.000013351, y: 64}
+  m_SizeDelta: {x: 243.8717, y: 88.9971}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1949453195
 MonoBehaviour:
@@ -4791,7 +4796,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2110706858
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4808,8 +4813,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 18.5765, y: 0}
-  m_SizeDelta: {x: 237.153, y: 50}
+  m_AnchoredPosition: {x: 0.000015259, y: 45}
+  m_SizeDelta: {x: 504.59, y: 198.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2110706859
 MonoBehaviour:
@@ -4865,7 +4870,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -4992,7 +4997,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2124721706}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 954706465}
+        m_TargetAssemblyTypeName: NegotiationManager, Assembly-CSharp
+        m_MethodName: DeclineTrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2124721706
 MonoBehaviour:
   m_ObjectHideFlags: 0

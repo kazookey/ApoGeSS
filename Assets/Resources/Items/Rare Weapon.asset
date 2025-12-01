@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39912759816dd4548b9d55bce06f7111, type: 3}
-  m_Name: Canned Food
+  m_Name: Rare Weapon
   m_EditorClassIdentifier: 
-  itemName: Canned Food
+  itemName: Rare Weapon
   icon: {fileID: 0}
   description: 
-  baseValue: 50
+  baseValue: 200
   isAmmo: 0
   isBarricadeRepair: 0
   effectAmount: 0

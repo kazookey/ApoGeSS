@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Scrap Metal
   icon: {fileID: 0}
   description: 
-  baseValue: 100
+  baseValue: 80
   isAmmo: 0
   isBarricadeRepair: 0
   effectAmount: 0
