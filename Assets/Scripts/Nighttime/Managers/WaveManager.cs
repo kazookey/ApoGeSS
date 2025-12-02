@@ -17,15 +17,15 @@ public class WaveManager : MonoBehaviour
     public List<EnemyEntry> enemyPool = new List<EnemyEntry>();
 
     [Header("Spawn Lanes")]
-    public Transform[] spawnPoints;  
+    public Transform[] spawnPoints;
+    [Header("Spawn Range")]
+    public float minSpawnY = -5f;
+    public float maxSpawnY = 5f;
     [Header("Wave Settings")]
-    public int startingEnemies = 3;
-    public float spawnDelay = 1f;
-    public float waveDelay = 2f;
-
-    private int currentWave = 0;
-    public static int aliveEnemies = 0;
-
+    public float spawnDelay = 1f; 
+    
+    private Coroutine spawnCoroutine;
+   
     void Awake()
     {
         Instance = this;
@@ -33,41 +33,30 @@ public class WaveManager : MonoBehaviour
 
     public void BeginWaves()
     {
-        StartCoroutine(StartNextWave());
+        spawnCoroutine = StartCoroutine(ContinuousSpawn());
     }
-
-    IEnumerator StartNextWave()
+    IEnumerator ContinuousSpawn()
     {
         while (true)
         {
-            currentWave++;
-            int enemiesThisWave = startingEnemies + (currentWave - 1);
+            Transform lane = spawnPoints[Random.Range(0, spawnPoints.Length)];
+            Vector3 spawnPosition = new Vector3(lane.position.x, Random.Range(minSpawnY, maxSpawnY), lane.position.z);
+            Instantiate(GetWeightedEnemy(), spawnPosition, Quaternion.identity);
 
-            Debug.Log("Starting Wave " + currentWave);
-            aliveEnemies = enemiesThisWave;
-
-            
-            for (int i = 0; i < enemiesThisWave; i++)
-            {
-                Transform lane = spawnPoints[Random.Range(0, spawnPoints.Length)];
-                Instantiate(GetWeightedEnemy(), lane.position, Quaternion.identity);
-
-                yield return new WaitForSeconds(spawnDelay);
-            }
-
-            while (aliveEnemies > 0)
-                yield return null;
-
-            Debug.Log("Wave " + currentWave + " cleared!");
-
-            
-            yield return new WaitForSeconds(waveDelay);
+            yield return new WaitForSeconds(spawnDelay);
         }
     }
 
-    public static void EnemyKilled()
+    public void StopSpawning()
+        {
+            if (spawnCoroutine != null)
+            {
+                StopCoroutine(spawnCoroutine);
+            }
+        }
+       public static void EnemyKilled()
     {
-        aliveEnemies--;
+       //for scoring/results
     }
 
     GameObject GetWeightedEnemy()
