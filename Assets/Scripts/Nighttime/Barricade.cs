@@ -2,21 +2,38 @@ using UnityEngine;
 
 public class Barricade : MonoBehaviour
 {
-    public float maxHealth = 20f;
-    public float currentHealth;
+    public int maxHP = 50;
+    public int currentHP;
+
+    public float damageCooldown = 0.5f;
+    float damageTimer = 0f;
 
     void Start()
     {
-        currentHealth = maxHealth;
+        currentHP = maxHP;
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(int dmg)
     {
-        currentHealth -= amount;
+        currentHP -= dmg;
+        Debug.Log("Barricade HP: " + currentHP);
 
-        if (currentHealth <= 0)
+        if (currentHP <= 0)
         {
             Debug.Log("Barricade destroyed!");
+            
         }
+    }
+
+    public bool CanTakeDamage()
+    {
+        if (damageTimer > 0)
+        {
+            damageTimer -= Time.deltaTime;
+            return false;
+        }
+
+        damageTimer = damageCooldown;
+        return true;
     }
 }

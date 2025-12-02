@@ -17,5 +17,14 @@ public class Bullet : MonoBehaviour
             other.GetComponent<Enemy>().TakeDamage(damage);
             Destroy(gameObject);
         }
+
+        var barrel = other.GetComponent<ExplosiveBarrel>();
+            if (barrel != null)
+            {
+                barrel.ActivateTrap();
+                Destroy(gameObject);
+            }
+
     }
+
 }

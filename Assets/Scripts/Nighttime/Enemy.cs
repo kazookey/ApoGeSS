@@ -2,44 +2,39 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public float moveSpeed = 2f;
-    public int health = 2;
-    public int damagePerSecond = 1;
+    public int maxHP = 3;
+    public float moveSpeed = 1.5f;
 
-    Transform barricade;
+    protected int currentHP;
+    protected Transform player;
 
     void Start()
     {
-        barricade = GameObject.FindWithTag("Barricade").transform;
+        currentHP = maxHP;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     void Update()
     {
-        transform.position = Vector2.MoveTowards(
-            transform.position,
-            barricade.position,
-            moveSpeed * Time.deltaTime
-        );
+        Move();
     }
 
-    void OnCollisionStay2D(Collision2D col)
+    protected virtual void Move()
     {
-        if (col.gameObject.CompareTag("Barricade"))
-        {
-            col.gameObject.GetComponent<Barricade>().TakeDamage(damagePerSecond * Time.deltaTime);
-        }
+        Vector2 dir = (player.position - transform.position).normalized;
+        transform.Translate(dir * moveSpeed * Time.deltaTime);
     }
 
-    public void TakeDamage(int dmg)
+    public virtual void TakeDamage(int dmg)
     {
-        health -= dmg;
-        if (health <= 0)
+        currentHP -= dmg;
+        if (currentHP <= 0)
             Die();
     }
 
-    void Die()
+    protected virtual void Die()
     {
-        Destroy(gameObject);
         WaveManager.EnemyKilled();
+        Destroy(gameObject);
     }
 }
