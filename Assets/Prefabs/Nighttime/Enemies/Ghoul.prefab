@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6356541521639988505}
   - component: {fileID: 6249607198182551905}
   - component: {fileID: 7384356137553014411}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ghoul
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -177,3 +177,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 3
   moveSpeed: 1.5
+  isStunned: 0

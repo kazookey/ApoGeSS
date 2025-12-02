@@ -1412,7 +1412,10 @@ MonoBehaviour:
     weight: 0
   - prefab: {fileID: 5373690180826367153, guid: e27bc577c683bc749a015ed3cfd55100, type: 3}
     weight: 0
-  spawnPoint: {fileID: 1971049816}
+  spawnPoints:
+  - {fileID: 1524980950}
+  - {fileID: 1971049816}
+  - {fileID: 1971049816}
   startingEnemies: 3
   spawnDelay: 1
   waveDelay: 2
@@ -1488,6 +1491,57 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1441dee502b73f4ea64b6bb92f09d55, type: 3}
+--- !u!1 &420249745
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 420249747}
+  - component: {fileID: 420249746}
+  m_Layer: 0
+  m_Name: TrapPlacementManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &420249746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420249745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 654ecf2c09dca4745b195aeee385262c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barrelPrefab: {fileID: 105946723359218771, guid: 70cbc020b216d8444ac27d08e8ce7efe, type: 3}
+  bearTrapPrefab: {fileID: 8365196759480448243, guid: d41cd4e53e7e56f4c8cd46cd0fef957e, type: 3}
+  batteryPrefab: {fileID: 3088068614426618825, guid: ef599fbc10fac8c4bbedce8ec0d885ab, type: 3}
+  barrelButtonUI: {fileID: 463482040}
+  bearTrapButtonUI: {fileID: 518797667}
+  batteryButtonUI: {fileID: 834249964}
+  maxUsePerNight: 1
+--- !u!4 &420249747
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420249745}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.2564442, y: 0.07555298, z: 0.05492086}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &433012353
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1557,7 +1611,6 @@ GameObject:
   - component: {fileID: 463482045}
   - component: {fileID: 463482044}
   - component: {fileID: 463482043}
-  - component: {fileID: 463482042}
   m_Layer: 5
   m_Name: BarrelButton
   m_TagString: Untagged
@@ -1584,21 +1637,6 @@ RectTransform:
   m_AnchoredPosition: {x: -270, y: -2}
   m_SizeDelta: {x: 200, y: 350}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &463482042
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 463482040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 654ecf2c09dca4745b195aeee385262c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  barrelPrefab: {fileID: 463482040}
-  bearTrapPrefab: {fileID: 8365196759480448243, guid: d41cd4e53e7e56f4c8cd46cd0fef957e, type: 3}
-  batteryPrefab: {fileID: 3088068614426618825, guid: ef599fbc10fac8c4bbedce8ec0d885ab, type: 3}
 --- !u!114 &463482043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1642,7 +1680,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 463482044}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 420249746}
+        m_TargetAssemblyTypeName: TrapPlacementManager, Assembly-CSharp
+        m_MethodName: SelectTrap
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 105946723359218771, guid: 70cbc020b216d8444ac27d08e8ce7efe, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &463482044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2085,7 +2135,6 @@ GameObject:
   - component: {fileID: 518797672}
   - component: {fileID: 518797671}
   - component: {fileID: 518797670}
-  - component: {fileID: 518797669}
   m_Layer: 5
   m_Name: BearTrapButton
   m_TagString: Untagged
@@ -2112,21 +2161,6 @@ RectTransform:
   m_AnchoredPosition: {x: -4, y: -2}
   m_SizeDelta: {x: 300, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &518797669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 518797667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 654ecf2c09dca4745b195aeee385262c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  barrelPrefab: {fileID: 105946723359218771, guid: 70cbc020b216d8444ac27d08e8ce7efe, type: 3}
-  bearTrapPrefab: {fileID: 8365196759480448243, guid: d41cd4e53e7e56f4c8cd46cd0fef957e, type: 3}
-  batteryPrefab: {fileID: 3088068614426618825, guid: ef599fbc10fac8c4bbedce8ec0d885ab, type: 3}
 --- !u!114 &518797670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2170,7 +2204,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 518797671}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 420249746}
+        m_TargetAssemblyTypeName: TrapPlacementManager, Assembly-CSharp
+        m_MethodName: SelectTrap
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8365196759480448243, guid: d41cd4e53e7e56f4c8cd46cd0fef957e, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &518797671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2797,7 +2843,6 @@ GameObject:
   - component: {fileID: 834249969}
   - component: {fileID: 834249968}
   - component: {fileID: 834249967}
-  - component: {fileID: 834249966}
   m_Layer: 5
   m_Name: BatteryButton
   m_TagString: Untagged
@@ -2824,21 +2869,6 @@ RectTransform:
   m_AnchoredPosition: {x: 270, y: -2}
   m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &834249966
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 834249964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 654ecf2c09dca4745b195aeee385262c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  barrelPrefab: {fileID: 105946723359218771, guid: 70cbc020b216d8444ac27d08e8ce7efe, type: 3}
-  bearTrapPrefab: {fileID: 8365196759480448243, guid: d41cd4e53e7e56f4c8cd46cd0fef957e, type: 3}
-  batteryPrefab: {fileID: 3088068614426618825, guid: ef599fbc10fac8c4bbedce8ec0d885ab, type: 3}
 --- !u!114 &834249967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2882,7 +2912,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 834249968}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 420249746}
+        m_TargetAssemblyTypeName: TrapPlacementManager, Assembly-CSharp
+        m_MethodName: SelectTrap
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 3088068614426618825, guid: ef599fbc10fac8c4bbedce8ec0d885ab, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &834249968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3160,6 +3202,37 @@ Transform:
   - {fileID: 562303072}
   - {fileID: 192936780}
   m_Father: {fileID: 1290896327}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1122900343
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1122900344}
+  m_Layer: 0
+  m_Name: EnemySpawn-Bottom
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1122900344
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122900343}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -2.01, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2033044864}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1123585651 stripped
 Transform:
@@ -4237,19 +4310,19 @@ PrefabInstance:
       objectReference: {fileID: 3240955229113299001, guid: 874ba56dea9731b488f3bcf0affb5da2, type: 3}
     - target: {fileID: 6366452962833482899, guid: ca45b89b96de72246a04bf0c4d8806ab, type: 3}
       propertyPath: m_Size.x
-      value: 1.0560732
+      value: 0.69316435
       objectReference: {fileID: 0}
     - target: {fileID: 6366452962833482899, guid: ca45b89b96de72246a04bf0c4d8806ab, type: 3}
       propertyPath: m_Size.y
-      value: 1.54671
+      value: 1.4167128
       objectReference: {fileID: 0}
     - target: {fileID: 6366452962833482899, guid: ca45b89b96de72246a04bf0c4d8806ab, type: 3}
       propertyPath: m_Offset.x
-      value: -0.014018059
+      value: 0.102437735
       objectReference: {fileID: 0}
     - target: {fileID: 6366452962833482899, guid: ca45b89b96de72246a04bf0c4d8806ab, type: 3}
       propertyPath: m_Offset.y
-      value: 0.7359561
+      value: 0.7467891
       objectReference: {fileID: 0}
     - target: {fileID: 6366452962833482899, guid: ca45b89b96de72246a04bf0c4d8806ab, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.y
@@ -4269,6 +4342,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5803592772448372121, guid: ca45b89b96de72246a04bf0c4d8806ab, type: 3}
   m_PrefabInstance: {fileID: 1512355706}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1524980949
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1524980950}
+  m_Layer: 0
+  m_Name: EnemySpawn-Top
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1524980950
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524980949}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.99, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2033044864}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1567739391 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4034813978366287414, guid: d1441dee502b73f4ea64b6bb92f09d55, type: 3}
@@ -5201,7 +5305,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1971049816}
   m_Layer: 0
-  m_Name: EnemySpawn
+  m_Name: EnemySpawn-Middle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5215,12 +5319,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1971049815}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.12, y: 0.01, z: 0.024903722}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2033044864}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2015651146
 PrefabInstance:
@@ -5284,6 +5388,40 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4034813978366287414, guid: d1441dee502b73f4ea64b6bb92f09d55, type: 3}
   m_PrefabInstance: {fileID: 624100585}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2033044863
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2033044864}
+  m_Layer: 0
+  m_Name: EnemySpawns
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2033044864
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033044863}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.12, y: 0.01, z: 0.024903722}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1971049816}
+  - {fileID: 1122900344}
+  - {fileID: 1524980950}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2034368421
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6005,9 +6143,10 @@ SceneRoots:
   - {fileID: 1512355706}
   - {fileID: 365661183}
   - {fileID: 1726210923}
-  - {fileID: 1971049816}
+  - {fileID: 2033044864}
   - {fileID: 716609103}
   - {fileID: 1966680773}
   - {fileID: 1073319727}
   - {fileID: 1255246744}
   - {fileID: 1290896327}
+  - {fileID: 420249747}

@@ -10,17 +10,21 @@ public enum NightState
 public class NightManager : MonoBehaviour
 {
     public static NightManager Instance;
-    
-    // Add these references!
+
     [Header("UI References")]
     public GameObject startNightButton;
-    public GameObject trapUI; 
+    public GameObject trapUI;
 
     public NightState currentState = NightState.Preparation;
 
     void Awake()
     {
         Instance = this;
+    }
+
+    public bool CanPlayerShoot()
+    {
+        return currentState == NightState.Wave;
     }
 
     public void StartWave()
@@ -42,9 +46,7 @@ public class NightManager : MonoBehaviour
         currentState = NightState.Wave;
         WaveManager.Instance.BeginWaves();
 
-        // Use the references instead of Find
-        if(startNightButton != null) startNightButton.SetActive(false);
-        if(trapUI != null) trapUI.SetActive(false);
+        if (startNightButton != null) startNightButton.SetActive(false);
+        if (trapUI != null) trapUI.SetActive(false);
     }
-
 }

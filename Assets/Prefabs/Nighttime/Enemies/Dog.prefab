@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9059658059507884683}
   - component: {fileID: 554984633676006102}
   - component: {fileID: 6152507261732176988}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Dog
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -177,3 +177,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 2
   moveSpeed: 3.5
+  isStunned: 0

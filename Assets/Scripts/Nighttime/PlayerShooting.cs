@@ -6,9 +6,8 @@ public class PlayerShooting : MonoBehaviour
     public Transform firePoint;
     public float bulletSpeed = 12f;
 
-    [Header("Ammo (optional until daytime is finished)")]
-    public ItemData ammoItem;   // will be assigned later
-    public bool useAmmo = false; // testing toggle
+    public ItemData ammoItem;
+    public bool useAmmo = false;
 
     void Update()
     {
@@ -18,7 +17,10 @@ public class PlayerShooting : MonoBehaviour
 
     void TryShoot()
     {
-        // inf ammo mode for testing
+        
+        if (!NightManager.Instance.CanPlayerShoot())
+            return;
+
         if (!useAmmo)
         {
             Shoot();
@@ -27,11 +29,10 @@ public class PlayerShooting : MonoBehaviour
 
         if (ammoItem == null)
         {
-            Debug.LogError("Assign the Ammo ItemData in the PlayerShooting Inspector!");
+            Debug.LogError("Assign Ammo ItemData!");
             return;
         }
 
-        // Use the new safe function
         if (GameManager.Instance.TryConsumeItem(ammoItem, 1))
         {
             Shoot();

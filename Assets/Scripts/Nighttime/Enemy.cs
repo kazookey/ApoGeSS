@@ -4,6 +4,8 @@ public class Enemy : MonoBehaviour
 {
     public int maxHP = 3;
     public float moveSpeed = 1.5f;
+    public bool isStunned = false;
+
 
     protected int currentHP;
     protected Transform player;
