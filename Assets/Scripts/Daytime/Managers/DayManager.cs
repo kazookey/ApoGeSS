@@ -13,6 +13,10 @@ public class DayManager : MonoBehaviour
     public TextMeshProUGUI creditsText;
     public Button endDayButton; // Only active when the day is over
     
+    [Header("Report UI")]
+    public GameObject reportPanel;
+    public TextMeshProUGUI reportText;
+    
     [Header("Dependencies")]
     public SalesManager salesManager;
 
@@ -22,6 +26,12 @@ public class DayManager : MonoBehaviour
     {
         UpdateTimeUI();
         endDayButton.interactable = false; // Cannot leave early
+        
+        // Check for Morning Report
+        if (!string.IsNullOrEmpty(GameManager.Instance.pendingMorningReport))
+        {
+            ShowMorningReport();
+        }
     }
     
     void Update()
@@ -71,5 +81,23 @@ public class DayManager : MonoBehaviour
     {
         // Add scene transition logic here later
         UnityEngine.SceneManagement.SceneManager.LoadScene("Nighttime"); 
+    }
+    
+    void ShowMorningReport()
+    {
+        if (reportPanel != null)
+        {
+            reportPanel.SetActive(true);
+            reportText.text = GameManager.Instance.pendingMorningReport;
+            
+            // Clear it so it doesn't show again
+            GameManager.Instance.pendingMorningReport = ""; 
+        }
+    }
+    
+    // Link this to a "Close" button on the Report Panel
+    public void CloseReport()
+    {
+        reportPanel.SetActive(false);
     }
 }
