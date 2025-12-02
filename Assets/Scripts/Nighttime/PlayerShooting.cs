@@ -18,27 +18,22 @@ public class PlayerShooting : MonoBehaviour
 
     void TryShoot()
     {
-        // inf ammo mode for tesitng
+        // inf ammo mode for testing
         if (!useAmmo)
         {
             Shoot();
             return;
         }
 
-        // real ammo mode for when daytime is finished
         if (ammoItem == null)
         {
-            Debug.LogWarning("Ammo ItemData not assigned!");
+            Debug.LogError("Assign the Ammo ItemData in the PlayerShooting Inspector!");
             return;
         }
 
-        // check daytime inv
-        int ammoCount = GameManager.Instance.GetItemCount(ammoItem);
-
-        if (ammoCount > 0)
+        // Use the new safe function
+        if (GameManager.Instance.TryConsumeItem(ammoItem, 1))
         {
-           
-            GameManager.Instance.inventory[ammoItem]--;
             Shoot();
         }
         else

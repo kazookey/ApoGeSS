@@ -10,6 +10,7 @@ public class DayManager : MonoBehaviour
     
     [Header("UI References")]
     public TextMeshProUGUI timeText; // Displays "Morning", "Afternoon"
+    public TextMeshProUGUI creditsText;
     public Button endDayButton; // Only active when the day is over
     
     [Header("Dependencies")]
@@ -21,6 +22,15 @@ public class DayManager : MonoBehaviour
     {
         UpdateTimeUI();
         endDayButton.interactable = false; // Cannot leave early
+    }
+    
+    void Update()
+    {
+        // This runs every frame to ensure the money is always accurate
+        if (creditsText != null)
+        {
+            creditsText.text = $"Credits: ${GameManager.Instance.credits}";
+        }
     }
 
     // Call this function when an action (Negotiation, Restock) is finished

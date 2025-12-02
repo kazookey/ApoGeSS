@@ -1104,15 +1104,15 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.004219409
+    x: 0
     y: 0
-    width: 0.9901547
+    width: 1
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3.125
+  orthographic size: 2.8125
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4224,6 +4224,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5076381711026411549, guid: ca45b89b96de72246a04bf0c4d8806ab, type: 3}
+      propertyPath: ammoItem
+      value: 
+      objectReference: {fileID: 11400000, guid: d730112b226001447a6052e7175b4710, type: 2}
+    - target: {fileID: 5076381711026411549, guid: ca45b89b96de72246a04bf0c4d8806ab, type: 3}
       propertyPath: firePoint
       value: 
       objectReference: {fileID: 1512355707}
@@ -5090,6 +5094,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c67354f9f362d2741a64ac6ccedb77d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startNightButton: {fileID: 1969562260}
+  trapUI: {fileID: 1682202133}
   currentState: 0
 --- !u!114 &1969562263
 MonoBehaviour:

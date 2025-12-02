@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public int currentDay = 1;
     public int credits = 150; // Starting money [cite: 114]
     public int reputation = 50; // Affects customer patience/offers
+    public float barricadeHealth = 100f;
     public ItemData testItem; //temporary
 
     // Inventory: Item -> Quantity
@@ -47,6 +48,18 @@ public class GameManager : MonoBehaviour
             inventory.Add(item, count);
             
         Debug.Log($"Added {count} of {item.itemName} to Shelves.");
+    }
+    
+   
+    public bool TryConsumeItem(ItemData item, int count)
+    {
+        if (inventory.ContainsKey(item) && inventory[item] >= count)
+        {
+            inventory[item] -= count;
+            Debug.Log($"Consumed {count} of {item.itemName}. Remaining: {inventory[item]}");
+            return true;
+        }
+        return false;
     }
 
     public int GetItemCount(ItemData item)
