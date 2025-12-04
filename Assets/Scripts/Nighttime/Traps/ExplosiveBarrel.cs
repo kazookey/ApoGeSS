@@ -5,6 +5,10 @@ public class ExplosiveBarrel : TrapBase
     public float radius = 1.5f;
     public int damage = 10;
 
+    [Header("Visuals")]
+    public Sprite destroyedSprite;
+    public GameObject explosionParticlesPrefab; 
+
     public override void ActivateTrap()
     {
         base.ActivateTrap();
@@ -17,7 +21,15 @@ public class ExplosiveBarrel : TrapBase
                 hit.GetComponent<Enemy>().TakeDamage(damage);
         }
 
-        
-        Destroy(gameObject, 0.1f);
+        if (explosionParticlesPrefab != null)
+        {
+            Instantiate(explosionParticlesPrefab, transform.position, Quaternion.identity);
+        }
+
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        if (sr != null && destroyedSprite != null)
+        {
+            sr.sprite = destroyedSprite;
+        }
     }
 }

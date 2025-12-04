@@ -89,7 +89,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!50 &2857453293979120069
 Rigidbody2D:
   serializedVersion: 5
@@ -180,4 +180,4 @@ MonoBehaviour:
   isStunned: 0
   throwRange: 4
   throwCooldown: 3
-  molotovPrefab: {fileID: 0}
+  molotovPrefab: {fileID: 2341880159830138235, guid: d5c870eb2d541524081e43b696a47ff5, type: 3}

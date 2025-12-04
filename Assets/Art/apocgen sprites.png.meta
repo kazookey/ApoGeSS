@@ -145,10 +145,10 @@ TextureImporter:
       name: apocgen sprites_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 73
-        width: 12
-        height: 16
+        x: 3
+        y: 74
+        width: 10
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -167,10 +167,10 @@ TextureImporter:
       name: apocgen sprites_1
       rect:
         serializedVersion: 2
-        x: 18
-        y: 73
-        width: 10
-        height: 14
+        x: 19
+        y: 74
+        width: 8
+        height: 12
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -189,12 +189,12 @@ TextureImporter:
       name: apocgen sprites_2
       rect:
         serializedVersion: 2
-        x: 31
-        y: 73
-        width: 18
-        height: 15
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 32
+        y: 74
+        width: 16
+        height: 13
+      alignment: 9
+      pivot: {x: 0.5625, y: 0.07692308}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -233,12 +233,12 @@ TextureImporter:
       name: apocgen sprites_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 59
-        width: 16
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 1
+        y: 60
+        width: 14
+        height: 6
+      alignment: 9
+      pivot: {x: 0.71428573, y: 0.16666667}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -255,12 +255,12 @@ TextureImporter:
       name: apocgen sprites_5
       rect:
         serializedVersion: 2
-        x: 16
-        y: 59
-        width: 16
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 17
+        y: 60
+        width: 14
+        height: 6
+      alignment: 9
+      pivot: {x: 0.71428573, y: 0.16666667}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -277,12 +277,12 @@ TextureImporter:
       name: apocgen sprites_6
       rect:
         serializedVersion: 2
-        x: 33
-        y: 42
-        width: 14
-        height: 23
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 34
+        y: 43
+        width: 12
+        height: 21
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1904762}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -299,12 +299,12 @@ TextureImporter:
       name: apocgen sprites_7
       rect:
         serializedVersion: 2
-        x: 0
-        y: 43
-        width: 16
-        height: 10
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 1
+        y: 44
+        width: 14
+        height: 8
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -321,12 +321,12 @@ TextureImporter:
       name: apocgen sprites_8
       rect:
         serializedVersion: 2
-        x: 21
-        y: 43
-        width: 6
-        height: 14
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 22
+        y: 44
+        width: 4
+        height: 12
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16666667}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -343,12 +343,12 @@ TextureImporter:
       name: apocgen sprites_9
       rect:
         serializedVersion: 2
-        x: 49
-        y: 42
-        width: 14
-        height: 15
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 50
+        y: 43
+        width: 12
+        height: 13
+      alignment: 9
+      pivot: {x: 0.5, y: 0.30769232}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -365,10 +365,10 @@ TextureImporter:
       name: apocgen sprites_10
       rect:
         serializedVersion: 2
-        x: 114
-        y: 11
-        width: 12
-        height: 46
+        x: 115
+        y: 12
+        width: 10
+        height: 44
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -389,10 +389,10 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 5
-        width: 49
-        height: 22
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 48
+        height: 21
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -743,8 +743,8 @@ TextureImporter:
         y: 1
         width: 1
         height: 2
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -765,8 +765,8 @@ TextureImporter:
         y: 28
         width: 6
         height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.33333334, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -787,8 +787,8 @@ TextureImporter:
         y: 28
         width: 5
         height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.4, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -797,6 +797,226 @@ TextureImporter:
       bones: []
       spriteID: 5d7e1f0d558d526448003ff5e2c8b40c
       internalID: 20139998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: break particle1
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 34
+        width: 5
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9002ced829980964b8f5aabbea04b4f5
+      internalID: 1976092382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: break particle2
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 26
+        width: 3
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96ad539af6e670547bc6dd83f5f20d40
+      internalID: -1317742370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: break particle 3
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 26
+        width: 3
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae1ae7c35ddde1d4eb35d075a58602f5
+      internalID: 595462059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: break particle 4
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 34
+        width: 4
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88f24c9867c37da4982a53e9d4a5a521
+      internalID: 143351694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: break particle 5
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 27
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87a6da8bbc82f7d45ab6528c780c0a24
+      internalID: -176774419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: break particle 6
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 31
+        width: 2
+        height: 2
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acb7212dadbc2bb42bd692cc1dd77f11
+      internalID: 218976083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: break particle 7
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 30
+        width: 2
+        height: 3
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee6ed1f7180dbd84c91f910dbaaa1869
+      internalID: -1364644512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: break particle 8
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 30
+        width: 1
+        height: 3
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a949a98dda1120d4b9b852a9cd9cf995
+      internalID: 471902356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: break particle 9
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 34
+        width: 2
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7b1f658ff54b4a4cb2acb2c13fe64f0
+      internalID: -1106721647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: break particle 10
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 34
+        width: 2
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4d9c7ab155cdd54cb8e51f04498d02f
+      internalID: -96716976
       vertices: []
       indices: 
       edges: []
@@ -839,6 +1059,16 @@ TextureImporter:
       apocgen sprites_9: -2021149399749371520
       blood1: 1386279688
       blood2: 1676815224
+      break particle 10: -96716976
+      break particle 3: 595462059
+      break particle 4: 143351694
+      break particle 5: -176774419
+      break particle 6: 218976083
+      break particle 7: -1364644512
+      break particle 8: 471902356
+      break particle 9: -1106721647
+      break particle1: 1976092382
+      break particle2: -1317742370
       bullet1: 2070790235
       bullet2: -217247805
       molotov: -1924042580

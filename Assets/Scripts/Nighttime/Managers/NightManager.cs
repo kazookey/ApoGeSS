@@ -23,6 +23,9 @@ public class NightManager : MonoBehaviour
     public float nightdurationSeconds = 300f; // 5 min default
     public NightState currentState = NightState.Preparation;
     private Coroutine timerCoroutine;
+
+     [Header("Defender Management")]
+    private System.Collections.Generic.List<HiredDefender> activeDefenders = new System.Collections.Generic.List<HiredDefender>();
     void Awake()
     {
         Instance = this;
@@ -49,6 +52,11 @@ public class NightManager : MonoBehaviour
     {
         if (timerCoroutine != null) StopCoroutine(timerCoroutine);
         WaveManager.Instance.StopSpawning();
+
+        foreach (var enemy in FindObjectsOfType<Enemy>())
+        {
+            Destroy(enemy.gameObject);
+        }
 
         if (timerContainer != null)
             timerContainer.SetActive(false);
@@ -92,14 +100,35 @@ public class NightManager : MonoBehaviour
 
     void UpdateTimerUI(float timeToDisplay)
         {
-            if (timerText == null) return;
+            float timeElapsed = nightdurationSeconds - timeToDisplay;
 
-            
-            float minutes = Mathf.FloorToInt(timeToDisplay / 60);
-            float seconds = Mathf.FloorToInt(timeToDisplay % 60);
+       
+        float totalGameMinutes = 8f * 60f; 
+        float progressNormalized = timeElapsed / nightdurationSeconds;
+        float gameTimeMinutesPassed = progressNormalized * totalGameMinutes;
 
-            timerText.text = string.Format("{0:0}:{1:00}", minutes, seconds);
-        }
+      
+        float gameStartMinutes = 22f * 60f;
+
+       
+        float totalCurrentGameMinutes = gameStartMinutes + gameTimeMinutesPassed;
+
+       
+        float minutesInDay = 24f * 60f;
+        totalCurrentGameMinutes %= minutesInDay;
+
+        
+        int displayHours = Mathf.FloorToInt(totalCurrentGameMinutes / 60f);
+        int displayMinutes = Mathf.FloorToInt(totalCurrentGameMinutes % 60f);
+
+        
+        timerText.text = string.Format("{0:00}:{1:00}", displayHours, displayMinutes);
+    }
+
+    public void RegisterDefender(HiredDefender defender)
+    {
+        activeDefenders.Add(defender);
+    }
 
     public void RestartNight()
     {
@@ -119,6 +148,15 @@ public class NightManager : MonoBehaviour
         {
             Destroy(enemy.gameObject);
         }
+
+        foreach (var defender in activeDefenders)
+        {
+            if (defender != null)
+            {
+                defender.StartRunningAway();
+            }
+        }
+        activeDefenders.Clear();
 
         if (timerContainer != null)
             timerContainer.SetActive(false);
