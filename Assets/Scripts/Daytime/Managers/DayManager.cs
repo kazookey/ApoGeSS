@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; 
+using TMPro;
+using DG.Tweening;
 using UnityEngine.SceneManagement; // Needed for scene reloading if we test loop
 
 public class DayManager : MonoBehaviour
@@ -13,6 +14,11 @@ public class DayManager : MonoBehaviour
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI creditsText;
     public Button endDayButton; 
+    
+    [Header("Effects")]
+    public GameObject moneyPopupPrefab; // Drag your prefab here
+    public Transform popupSpawnPoint;   // Where the text appears (usually over the credits)
+    private int lastCreditsValue = -1;  // To track changes
     
     [Header("Morning Report UI")]
     public GameObject reportPanel;        // The Popup Window
@@ -39,10 +45,35 @@ public class DayManager : MonoBehaviour
         {
             ShowMorningReport(GameManager.Instance.pendingMorningReport);
         }
+        
+        lastCreditsValue = GameManager.Instance.credits;
     }
     
     void Update()
     {
+        // 1. Check for Money CHANGES (Logic)
+        if (GameManager.Instance.credits != lastCreditsValue)
+        {
+            int diff = GameManager.Instance.credits - lastCreditsValue;
+            SpawnMoneyPopup(diff);
+            lastCreditsValue = GameManager.Instance.credits;
+        }
+
+        // 2. Update the Visual Counter (Animation)
+        if (creditsText != null)
+        {
+            // If the visual number hasn't caught up to the real number yet...
+            if (displayedCredits != GameManager.Instance.credits)
+            {
+                // First frame init
+                if (displayedCredits == -1) displayedCredits = GameManager.Instance.credits;
+                
+                // DOTween the number for the "ticking" effect
+                DOTween.To(() => displayedCredits, x => displayedCredits = x, GameManager.Instance.credits, 0.5f)
+                    .OnUpdate(() => creditsText.text = $"Credits: ${displayedCredits}");
+            }
+        }
+        
         // Credit Counter Logic
         if (creditsText != null)
         {
@@ -117,5 +148,18 @@ public class DayManager : MonoBehaviour
     public void GoToPreparationPhase()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("Nighttime"); 
+    }
+    
+    void SpawnMoneyPopup(int amount)
+    {
+        if (moneyPopupPrefab != null && popupSpawnPoint != null)
+        {
+            GameObject popup = Instantiate(moneyPopupPrefab, popupSpawnPoint);
+            // Reset scale just in case
+            popup.transform.localScale = Vector3.one; 
+            
+            MoneyPopup script = popup.GetComponent<MoneyPopup>();
+            if (script != null) script.Setup(amount);
+        }
     }
 }

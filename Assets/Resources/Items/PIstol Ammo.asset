@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PIstol Ammo
   m_EditorClassIdentifier: 
   itemName: PIstol Ammo
-  icon: {fileID: 0}
+  icon: {fileID: 9094600903545770030, guid: 01ee294c242185b488366d62acf6642d, type: 3}
   description: 
   baseValue: 150
   isAmmo: 0
