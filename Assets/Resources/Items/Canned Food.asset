@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Canned Food
   m_EditorClassIdentifier: 
   itemName: Canned Food
-  icon: {fileID: 0}
+  icon: {fileID: -273060469431498887, guid: 01ee294c242185b488366d62acf6642d, type: 3}
   description: 
   baseValue: 50
   isAmmo: 0

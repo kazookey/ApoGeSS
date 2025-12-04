@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Greedy Raider
   m_EditorClassIdentifier: 
   traderName: Greedy Raider
-  portrait: {fileID: 0}
+  portrait: {fileID: -8346291274449466048, guid: 01ee294c242185b488366d62acf6642d, type: 3}
   introLines:
   - Top quality stuff. Not cheap.
   - Pay up or shut up.

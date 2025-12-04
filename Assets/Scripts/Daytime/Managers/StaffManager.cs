@@ -6,47 +6,52 @@ public class StaffManager : MonoBehaviour
 {
     [Header("UI References")]
     public GameObject staffPanel;
-    public TextMeshProUGUI availableText; // "Unassigned: 1"
-    public TextMeshProUGUI scoutCountText;
-    public TextMeshProUGUI defenderCountText;
+    public TextMeshProUGUI availableText;   // "Unassigned: 1"
+    public TextMeshProUGUI scoutCountText;  // "2"
+    public TextMeshProUGUI defenderCountText; // "1"
 
-    // Local tracking before we commit to GameManager
+    [Header("Buttons (Optional for linking)")]
+    public Button closeButton;
+
+    // Variables to track changes before saving
     private int currentScouts;
     private int currentDefenders;
 
     void Start()
     {
         if(staffPanel != null) staffPanel.SetActive(false);
-        UpdateUI();
+        if(closeButton != null) closeButton.onClick.AddListener(CloseStaffMenu);
     }
 
     public void OpenStaffMenu()
     {
-        // Load current state
+        // 1. Get fresh data from GameManager
         currentScouts = GameManager.Instance.assignedScouts;
         currentDefenders = GameManager.Instance.assignedDefenders;
         
+        // 2. Show Panel
         staffPanel.SetActive(true);
         UpdateUI();
     }
 
     public void CloseStaffMenu()
     {
-        // Save changes to GameManager
+        // 3. Save data BACK to GameManager
         GameManager.Instance.assignedScouts = currentScouts;
         GameManager.Instance.assignedDefenders = currentDefenders;
         
         staffPanel.SetActive(false);
     }
 
+    // Link this to your [+] and [-] buttons
     public void ModifyScouts(int amount)
     {
         int unassigned = GetUnassignedCount();
         
-        // If adding, check if we have unassigned people
+        // Rules:
+        // Can't add if nobody is available
         if (amount > 0 && unassigned <= 0) return;
-        
-        // If removing, check if we have scouts
+        // Can't remove if we have 0 scouts
         if (amount < 0 && currentScouts <= 0) return;
 
         currentScouts += amount;
@@ -73,7 +78,8 @@ public class StaffManager : MonoBehaviour
     {
         if (availableText == null) return;
 
-        availableText.text = $"Unassigned Staff: {GetUnassignedCount()}";
+        // Visual feedback
+        availableText.text = GetUnassignedCount().ToString();
         scoutCountText.text = currentScouts.ToString();
         defenderCountText.text = currentDefenders.ToString();
     }

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: faece596ed571f144a615b5c7563a7b7
+guid: 01ee294c242185b488366d62acf6642d
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -29,6 +29,27 @@ TextureImporter:
   - first:
       213: -6595680761151332689
     second: UI_8
+  - first:
+      213: -273060469431498887
+    second: UI_9
+  - first:
+      213: 8391660652416901024
+    second: UI_10
+  - first:
+      213: 9094600903545770030
+    second: UI_11
+  - first:
+      213: -4532114073746202998
+    second: UI_12
+  - first:
+      213: -8346291274449466048
+    second: UI_13
+  - first:
+      213: -343943630576144839
+    second: UI_14
+  - first:
+      213: 7301787903208175943
+    second: UI_15
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -75,7 +96,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -124,16 +145,16 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: UI_0
+      name: UI_20
       rect:
         serializedVersion: 2
-        x: 0
-        y: 74
-        width: 33
-        height: 7
+        x: 31
+        y: 82
+        width: 32
+        height: 8
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 3, y: 2, z: 3, w: 2}
       customData: 
       outline: []
       physicsShape: []
@@ -149,13 +170,13 @@ TextureImporter:
       name: UI_1
       rect:
         serializedVersion: 2
-        x: 63
-        y: 81
-        width: 97
-        height: 9
+        x: 0
+        y: 75
+        width: 16
+        height: 5
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 1, y: 1, z: 1, w: 1}
       customData: 
       outline: []
       physicsShape: []
@@ -171,12 +192,12 @@ TextureImporter:
       name: UI_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 41
-        width: 49
-        height: 34
+        x: 63
+        y: 81
+        width: 98
+        height: 9
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -193,13 +214,13 @@ TextureImporter:
       name: UI_3
       rect:
         serializedVersion: 2
-        x: 48
-        y: 41
-        width: 7
-        height: 34
+        x: 0
+        y: 42
+        width: 48
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 3, y: 3, z: 3, w: 3}
       customData: 
       outline: []
       physicsShape: []
@@ -220,7 +241,7 @@ TextureImporter:
         width: 50
         height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -242,7 +263,7 @@ TextureImporter:
         width: 46
         height: 6
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -264,7 +285,7 @@ TextureImporter:
         width: 46
         height: 6
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -282,11 +303,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 9
-        width: 65
-        height: 18
+        y: 27
+        width: 14
+        height: 14
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -303,12 +324,12 @@ TextureImporter:
       name: UI_8
       rect:
         serializedVersion: 2
-        x: 1
-        y: 27
+        x: 16
+        y: 26
         width: 14
         height: 14
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -321,11 +342,165 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: UI_9
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 27
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 977855523f4e53cf0800000000000000
+      internalID: -273060469431498887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_11
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 28
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e20dac52653863e70800000000000000
+      internalID: 9094600903545770030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_12
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 27
+        width: 30
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8e1fc81342ba11c0800000000000000
+      internalID: -4532114073746202998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_13
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 0
+        width: 32
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04d4f727e440c2c80800000000000000
+      internalID: -8346291274449466048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_14
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 0
+        width: 24
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93e20cc17111a3bf0800000000000000
+      internalID: -343943630576144839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 65
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 749b7f35969255560800000000000000
+      internalID: 7301787903208175943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 85
+        width: 31
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 2, y: 1, z: 2, w: 1}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfd4b280f0ab51d4f8fcbf482a465c05
+      internalID: 8391660652416901024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 33c63f3b474b9714d865827edfb95dba
     internalID: 0
     vertices: []
     indices: 
@@ -335,15 +510,22 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      UI_0: -1557013538026691241
+      UI_0: 8391660652416901024
       UI_1: 82707731993968007
+      UI_11: 9094600903545770030
+      UI_12: -4532114073746202998
+      UI_13: -8346291274449466048
+      UI_14: -343943630576144839
+      UI_15: 7301787903208175943
       UI_2: 1080825480604336155
+      UI_20: -1557013538026691241
       UI_3: -9136572144232859775
       UI_4: 8586885197115800619
       UI_5: 8160775752198118580
       UI_6: 7448113381798972013
       UI_7: 7843416716369364892
       UI_8: -6595680761151332689
+      UI_9: -273060469431498887
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

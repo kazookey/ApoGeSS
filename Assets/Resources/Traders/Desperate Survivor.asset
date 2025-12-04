@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Desperate Survivor
   m_EditorClassIdentifier: 
   traderName: Desperate Survivor
-  portrait: {fileID: 0}
+  portrait: {fileID: -343943630576144839, guid: 01ee294c242185b488366d62acf6642d, type: 3}
   introLines:
   - Please... I need money for medicine.
   - Take it, just give me something.

@@ -1,7 +1,8 @@
 using UnityEngine;
+using UnityEngine.SceneManagement; 
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public enum NightState
 {
@@ -19,22 +20,26 @@ public class NightManager : MonoBehaviour
     [Header("UI References")]
     public GameObject startNightButton;
     public GameObject trapUI;
+    
+    // Ramon's Timer UI
     public TextMeshProUGUI timerText;
     public GameObject timerContainer;
     
-    [Header("End Night UI")]
+    // Ramon's End Screen
     public GameObject endNightPanel;
     public TextMeshProUGUI resultText;
     public TextMeshProUGUI endButtonText;
     
+    [Header("Defender Spawning")]
+    public GameObject defenderPrefab;       
+    public Transform[] defenderSpawnPoints; 
+
     [Header("Night Settings")]
     public float nightdurationSeconds = 300f; 
     public NightState currentState = NightState.Preparation;
     private Coroutine timerCoroutine;
 
-    [Header("Defender Management")]
- 
-    private System.Collections.Generic.List<Defender> activeDefenders = new System.Collections.Generic.List<Defender>();
+    private List<HiredDefender> activeDefenders = new List<HiredDefender>();
     
     private PlayerMovement playerMovement;
     private Barricade mainBarricade;
@@ -42,30 +47,60 @@ public class NightManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        if (timerContainer != null)
-            timerContainer.SetActive(false);
-            
-        if (endNightPanel != null)
-            endNightPanel.SetActive(false);
+        if (timerContainer != null) timerContainer.SetActive(false);
+        if (endNightPanel != null) endNightPanel.SetActive(false);
 
+        // Find Scene References
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-        if (playerObject != null)
-        {
-            playerMovement = playerObject.GetComponent<PlayerMovement>();
-        }
+        if (playerObject != null) playerMovement = playerObject.GetComponent<PlayerMovement>();
         
         GameObject barricadeObject = GameObject.FindGameObjectWithTag("Barricade");
-        if (barricadeObject != null)
-        {
-            mainBarricade = barricadeObject.GetComponent<Barricade>();
-        }
+        if (barricadeObject != null) mainBarricade = barricadeObject.GetComponent<Barricade>();
         
         Time.timeScale = 1f;
     }
-
-    public bool CanPlayerShoot()
+    
+    void Start()
     {
-        return currentState == NightState.Wave;
+        // 1. SPAWN DEFENDERS
+        SpawnDefenders();
+
+        // 2. Load Barricade HP
+        // FIX: Now uses 'currentHealth' (float) to match Barricade.cs
+        if (mainBarricade != null)
+        {
+            if (GameManager.Instance != null)
+                mainBarricade.currentHealth = GameManager.Instance.barricadeHealth;
+            else
+                mainBarricade.currentHealth = 100f; 
+                
+            mainBarricade.maxHealth = 100f; 
+        }
+    }
+
+    void SpawnDefenders()
+    {
+        if (GameManager.Instance == null) return;
+
+        int count = GameManager.Instance.assignedDefenders;
+        
+        if (defenderSpawnPoints == null || defenderSpawnPoints.Length == 0) return;
+
+        int limit = Mathf.Min(count, defenderSpawnPoints.Length);
+
+        for (int i = 0; i < limit; i++)
+        {
+            if (defenderPrefab != null && defenderSpawnPoints[i] != null)
+            {
+                Instantiate(defenderPrefab, defenderSpawnPoints[i].position, Quaternion.identity);
+            }
+        }
+        Debug.Log($"Spawning {limit} Defenders.");
+    }
+
+    public void RegisterDefender(HiredDefender defender)
+    {
+        activeDefenders.Add(defender);
     }
 
     public void OnStartNightButton()
@@ -73,118 +108,90 @@ public class NightManager : MonoBehaviour
         if (currentState != NightState.Preparation) return;
 
         currentState = NightState.Wave;
-        WaveManager.Instance.BeginWaves();
+        
+        if (WaveManager.Instance != null) WaveManager.Instance.BeginWaves();
 
         timerCoroutine = StartCoroutine(NightTimer());
-
-        if (timerContainer != null)
-            timerContainer.SetActive(true);
+        if (timerContainer != null) timerContainer.SetActive(true);
 
         if (startNightButton != null) startNightButton.SetActive(false);
         if (trapUI != null) trapUI.SetActive(false);
-        
-        // --- LOAD INITIAL BARRICADE HEALTH FROM PLAYERPREFS ---
-        if (mainBarricade != null)
-        {
-            // Load previous HP, default to 100 if never set (new game/day 1)
-            int initialHP = PlayerPrefs.GetInt("BarricadeHP", 100); 
-            mainBarricade.currentHP = initialHP;
-            mainBarricade.maxHP = initialHP; 
-        }
-        
     }
 
     IEnumerator NightTimer()
     {
         float timeLeft = nightdurationSeconds;
 
-        while (timeLeft > 0)
+        while (timeLeft > 0 && currentState == NightState.Wave)
         {
             timeLeft -= Time.deltaTime;
             UpdateTimerUI(timeLeft);
             yield return null;
         }
 
-        timeLeft = 0; 
-        UpdateTimerUI(timeLeft);
-        
-        // Victory! Timer ran out. Pass current HP.
-        EndNightSequence(true, mainBarricade != null ? mainBarricade.currentHP : 0); 
+        if (currentState == NightState.Wave)
+        {
+            timeLeft = 0; 
+            UpdateTimerUI(timeLeft);
+            // FIX: Uses float 'currentHealth'
+            EndNightSequence(true, mainBarricade != null ? mainBarricade.currentHealth : 0f); 
+        }
     }
 
     void UpdateTimerUI(float timeToDisplay)
     {
-        float timeElapsed = nightdurationSeconds - timeToDisplay;
-        float totalGameMinutes = 8f * 60f; 
-        float progressNormalized = timeElapsed / nightdurationSeconds;
-        float gameTimeMinutesPassed = progressNormalized * totalGameMinutes;
+        if (timerText == null) return;
 
-        float gameStartMinutes = 22f * 60f; 
-        float totalCurrentGameMinutes = gameStartMinutes + gameTimeMinutesPassed;
-        float minutesInDay = 24f * 60f;
-        totalCurrentGameMinutes %= minutesInDay;
-
-        int displayHours = Mathf.FloorToInt(totalCurrentGameMinutes / 60f);
-        int displayMinutes = Mathf.FloorToInt(totalCurrentGameMinutes % 60f);
-
-        timerText.text = string.Format("{0:00}:{1:00}", displayHours, displayMinutes);
+        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
+        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
+        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-    public void EndNightSequence(bool victory, int finalBarricadeHP)
+    // FIX: Changed finalBarricadeHP to float
+    public void EndNightSequence(bool victory, float finalBarricadeHP)
     {
         if (currentState == NightState.GameOver || currentState == NightState.Victory) return;
         
         if (timerCoroutine != null) StopCoroutine(timerCoroutine);
-        WaveManager.Instance.StopSpawning();
+        if (WaveManager.Instance != null) WaveManager.Instance.StopSpawning();
 
         Time.timeScale = 0f;
-
-        if (playerMovement != null) playerMovement.enabled = false;
         
+        if (playerMovement != null) playerMovement.enabled = false;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         
         if (victory)
         {
             currentState = NightState.Victory;
-            WaveManager.Instance.DespawnAllEnemies();
+            if (WaveManager.Instance != null) WaveManager.Instance.DespawnAllEnemies();
             
-            resultText.text = "YOU SURVIVED!";
-            endButtonText.text = "END NIGHT";
+            if(resultText != null) resultText.text = "YOU SURVIVED!";
+            if(endButtonText != null) endButtonText.text = "NEXT DAY";
             
-            // --- SAVE VICTORY DATA TO PLAYERPREFS ---
-            PlayerPrefs.SetInt("BarricadeHP", finalBarricadeHP);
-            PlayerPrefs.SetInt("Guards", activeDefenders.Count);
-            // Assuming 0 for now until ammo tracking is implemented
-            PlayerPrefs.SetInt("AmmoAmount", 0); 
-            // --- END SAVE ---
+            // --- SYNC WITH GAMEMANAGER ---
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.barricadeHealth = finalBarricadeHP; // Save Float HP
+                GameManager.Instance.ProcessMorningResults(); 
+                GameManager.Instance.AdvanceDay(); 
+            }
         }
-        else // Loss
+        else 
         {
             currentState = NightState.GameOver;
-            
-            resultText.text = "YOU GOT OVERRUN!";
-            endButtonText.text = "RETRY NIGHT";
+            if(resultText != null) resultText.text = "YOU GOT OVERRUN!";
+            if(endButtonText != null) endButtonText.text = "RETRY NIGHT";
 
-            
             foreach (var defender in activeDefenders)
             {
-                if (defender != null)
-                {
-                    
-                    defender.Flee(); 
-                }
+                if (defender != null) defender.StartRunningAway(); 
             }
-            
-            
-            PlayerPrefs.SetInt("BarricadeHP", 0); 
-            PlayerPrefs.SetInt("Guards", 0); 
-            PlayerPrefs.SetInt("AmmoAmount", 0); 
-            
-            
             activeDefenders.Clear();
+            
+            if (GameManager.Instance != null) GameManager.Instance.barricadeHealth = 0;
         }
         
-        PlayerPrefs.Save(); 
-
         if (timerContainer != null) timerContainer.SetActive(false);
         if (endNightPanel != null) endNightPanel.SetActive(true);
     }
@@ -195,7 +202,7 @@ public class NightManager : MonoBehaviour
         
         if (currentState == NightState.Victory)
         {
-            SceneManager.LoadScene("DayScene"); 
+            SceneManager.LoadScene("Daytime"); 
         }
         else if (currentState == NightState.GameOver)
         {
@@ -203,9 +210,8 @@ public class NightManager : MonoBehaviour
         }
     }
 
-    
-    public void RegisterDefender(Defender defender)
+    public bool CanPlayerShoot()
     {
-        activeDefenders.Add(defender);
+        return currentState == NightState.Wave;
     }
 }

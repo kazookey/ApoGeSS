@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Scrap Metal
   m_EditorClassIdentifier: 
   itemName: Scrap Metal
-  icon: {fileID: 0}
+  icon: {fileID: -6595680761151332689, guid: 01ee294c242185b488366d62acf6642d, type: 3}
   description: 
   baseValue: 80
   isAmmo: 0
