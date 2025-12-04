@@ -1,49 +1,87 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // Ensure you have TextMeshPro installed
+using TMPro; 
+using UnityEngine.SceneManagement; // Needed for scene reloading if we test loop
 
 public class DayManager : MonoBehaviour
 {
     [Header("Time Settings")]
-    public int maxTimeSlots = 4; // e.g., Morning, Noon, Afternoon, Evening
+    public int maxTimeSlots = 4;
     public int currentTimeSlot = 0;
     
     [Header("UI References")]
-    public TextMeshProUGUI timeText; // Displays "Morning", "Afternoon"
+    public TextMeshProUGUI timeText;
     public TextMeshProUGUI creditsText;
-    public Button endDayButton; // Only active when the day is over
+    public Button endDayButton; 
     
-    [Header("Report UI")]
-    public GameObject reportPanel;
-    public TextMeshProUGUI reportText;
+    [Header("Morning Report UI")]
+    public GameObject reportPanel;        // The Popup Window
+    public TextMeshProUGUI reportText;    // The text body inside
+    public Button closeReportButton;      // "OK" button
     
     [Header("Dependencies")]
     public SalesManager salesManager;
 
     private string[] timeLabels = { "Morning", "Noon", "Afternoon", "Evening" };
+    private int displayedCredits = -1; 
 
     void Start()
     {
         UpdateTimeUI();
-        endDayButton.interactable = false; // Cannot leave early
+        endDayButton.interactable = false;
         
-        // Check for Morning Report
+        // Setup Report Button
+        if(closeReportButton != null) closeReportButton.onClick.AddListener(CloseReport);
+        if(reportPanel != null) reportPanel.SetActive(false);
+
+        // 1. Check if GameManager has a report waiting from the Night
         if (!string.IsNullOrEmpty(GameManager.Instance.pendingMorningReport))
         {
-            ShowMorningReport();
+            ShowMorningReport(GameManager.Instance.pendingMorningReport);
         }
     }
     
     void Update()
     {
-        // This runs every frame to ensure the money is always accurate
+        // Credit Counter Logic
         if (creditsText != null)
         {
-            creditsText.text = $"Credits: ${GameManager.Instance.credits}";
+            int actualCredits = GameManager.Instance.credits;
+            if (displayedCredits != actualCredits)
+            {
+                displayedCredits = actualCredits;
+                creditsText.text = $"Credits: ${actualCredits}";
+            }
+        }
+
+        // --- DEBUG TESTING ---
+        // Press 'M' to simulate a Morning Report instantly
+        if (Application.isEditor && Input.GetKeyDown(KeyCode.M))
+        {
+            Debug.Log("Simulating Morning...");
+            GameManager.Instance.assignedScouts = 2; // Pretend we sent 2 people
+            GameManager.Instance.ProcessMorningResults(); // Roll dice
+            ShowMorningReport(GameManager.Instance.pendingMorningReport); // Show UI
         }
     }
 
-    // Call this function when an action (Negotiation, Restock) is finished
+    public void ShowMorningReport(string message)
+    {
+        if (reportPanel != null)
+        {
+            reportPanel.SetActive(true);
+            reportText.text = message;
+            
+            // Clear the message so it doesn't show again next time
+            GameManager.Instance.pendingMorningReport = ""; 
+        }
+    }
+
+    public void CloseReport()
+    {
+        if (reportPanel != null) reportPanel.SetActive(false);
+    }
+
     public void AdvanceTime(int cost = 1)
     {
         currentTimeSlot += cost;
@@ -76,28 +114,8 @@ public class DayManager : MonoBehaviour
         endDayButton.interactable = true;
     }
 
-    // Link this to your "End Day" button in the Inspector
     public void GoToPreparationPhase()
     {
-        // Add scene transition logic here later
         UnityEngine.SceneManagement.SceneManager.LoadScene("Nighttime"); 
-    }
-    
-    void ShowMorningReport()
-    {
-        if (reportPanel != null)
-        {
-            reportPanel.SetActive(true);
-            reportText.text = GameManager.Instance.pendingMorningReport;
-            
-            // Clear it so it doesn't show again
-            GameManager.Instance.pendingMorningReport = ""; 
-        }
-    }
-    
-    // Link this to a "Close" button on the Report Panel
-    public void CloseReport()
-    {
-        reportPanel.SetActive(false);
     }
 }
