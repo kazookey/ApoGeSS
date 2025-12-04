@@ -1622,7 +1622,7 @@ MonoBehaviour:
   m_text: Close
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e96554c34ecdf6e49abacd5e86f79410, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: -2003230325842797279, guid: e96554c34ecdf6e49abacd5e86f79410, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2533,7 +2533,7 @@ MonoBehaviour:
 '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e96554c34ecdf6e49abacd5e86f79410, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: -2003230325842797279, guid: e96554c34ecdf6e49abacd5e86f79410, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2671,7 +2671,7 @@ MonoBehaviour:
 '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e96554c34ecdf6e49abacd5e86f79410, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: -2003230325842797279, guid: e96554c34ecdf6e49abacd5e86f79410, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4486,7 +4486,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 954706464}
-  - component: {fileID: 954706467}
   - component: {fileID: 954706466}
   - component: {fileID: 954706468}
   - component: {fileID: 954706465}
@@ -4562,34 +4561,6 @@ MonoBehaviour:
   reportText: {fileID: 1355662145}
   closeReportButton: {fileID: 122824306}
   salesManager: {fileID: 954706470}
---- !u!114 &954706467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 954706463}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 919f070c12792534b886ee2622c70e45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentDay: 1
-  credits: 150
-  reputation: 50
-  barricadeHealth: 100
-  totalSurvivors: 0
-  maxSurvivors: 2
-  assignedDefenders: 0
-  assignedScouts: 0
-  scoutLootTable:
-  - {fileID: 11400000, guid: bfdefa56776bcf54783088ff6bbcf2fe, type: 2}
-  - {fileID: 11400000, guid: 435f37f30de61f24595da294e15a37eb, type: 2}
-  - {fileID: 11400000, guid: d730112b226001447a6052e7175b4710, type: 2}
-  - {fileID: 11400000, guid: 3217493a9764e554b9b87e35fa0a4e35, type: 2}
-  scoutDeathChance: 0.15
-  pendingMorningReport: 
-  testItem: {fileID: 11400000, guid: bfdefa56776bcf54783088ff6bbcf2fe, type: 2}
 --- !u!114 &954706468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4745,7 +4716,7 @@ MonoBehaviour:
   m_text: Ammo
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e96554c34ecdf6e49abacd5e86f79410, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: -2003230325842797279, guid: e96554c34ecdf6e49abacd5e86f79410, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7277,7 +7248,7 @@ MonoBehaviour:
   m_text: Workshop
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e96554c34ecdf6e49abacd5e86f79410, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: -2003230325842797279, guid: e96554c34ecdf6e49abacd5e86f79410, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8616,6 +8587,66 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1753189297}
   m_CullTransparentMesh: 1
+--- !u!1 &1763735680
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1763735682}
+  - component: {fileID: 1763735681}
+  m_Layer: 0
+  m_Name: _GameSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1763735681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763735680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 919f070c12792534b886ee2622c70e45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentDay: 1
+  credits: 150
+  reputation: 50
+  barricadeHealth: 100
+  totalSurvivors: 0
+  maxSurvivors: 2
+  assignedDefenders: 0
+  assignedScouts: 0
+  scoutLootTable:
+  - {fileID: 11400000, guid: bfdefa56776bcf54783088ff6bbcf2fe, type: 2}
+  - {fileID: 11400000, guid: 435f37f30de61f24595da294e15a37eb, type: 2}
+  - {fileID: 11400000, guid: d730112b226001447a6052e7175b4710, type: 2}
+  - {fileID: 11400000, guid: 3217493a9764e554b9b87e35fa0a4e35, type: 2}
+  scoutDeathChance: 0.15
+  pendingMorningReport: 
+  testItem: {fileID: 11400000, guid: bfdefa56776bcf54783088ff6bbcf2fe, type: 2}
+--- !u!4 &1763735682
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763735680}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 960, y: 540, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1833269849
 GameObject:
   m_ObjectHideFlags: 0
@@ -9219,7 +9250,7 @@ MonoBehaviour:
   m_text: 'Barricade Integrity: 100%'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e96554c34ecdf6e49abacd5e86f79410, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: -2003230325842797279, guid: e96554c34ecdf6e49abacd5e86f79410, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9581,7 +9612,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1994048677
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10580,3 +10611,4 @@ SceneRoots:
   - {fileID: 954706464}
   - {fileID: 962301861}
   - {fileID: 380710256}
+  - {fileID: 1763735682}

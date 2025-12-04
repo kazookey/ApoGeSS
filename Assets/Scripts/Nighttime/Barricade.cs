@@ -3,12 +3,12 @@ using UnityEngine.UI;
 
 public class Barricade : MonoBehaviour
 {
-    [Header("Health Settings")]
-    public float maxHealth = 100f; // Renamed from maxHP to match NightManager
-    public float currentHealth;    // Renamed from currentHP
+    [Header("Settings")]
+    public float maxHealth = 100f; // Standardized to float
+    public float currentHealth;
 
     [Header("UI")]
-    public Slider hpSlider;
+    public Image hpImage; // Drag your "Health Bar Fill" image here
 
     [Header("Invincibility")]
     public float damageCooldown = 0.5f;
@@ -16,59 +16,66 @@ public class Barricade : MonoBehaviour
 
     void Start()
     {
-        // 1. Sync with GameManager (Rein's Day Logic)
+        // 1. LOAD Global Health (The Link)
         if (GameManager.Instance != null)
         {
             currentHealth = GameManager.Instance.barricadeHealth;
         }
         else
         {
-            currentHealth = maxHealth;
+            currentHealth = maxHealth; // Fallback for testing Night scene alone
         }
         
-        UpdateHPSlider();
+        UpdateHPDisplay();
     }
 
-    public void Update()
+    void Update()
     {
-        // 2. Ramon's Cooldown Logic (Tick down the timer)
         if (damageTimer > 0)
         {
             damageTimer -= Time.deltaTime;
         }
     }
 
-    // --- THIS IS THE MISSING FUNCTION ---
     public bool CanTakeDamage()
     {
-        if (damageTimer > 0) return false;
-        
-        damageTimer = damageCooldown;
-        return true;
+        return damageTimer <= 0;
     }
-    // ------------------------------------
 
     public void TakeDamage(float dmg)
     {
-        currentHealth -= dmg;
+        if (!CanTakeDamage()) return;
         
-        // Update Global State
+        damageTimer = damageCooldown; // Reset cooldown
+        currentHealth -= dmg;
+
+        // 2. SAVE Global Health Immediately (The Link)
         if (GameManager.Instance != null)
         {
             GameManager.Instance.barricadeHealth = currentHealth;
         }
 
-        UpdateHPSlider();
+        Debug.Log($"Barricade Hit! HP: {currentHealth}");
+        UpdateHPDisplay();
 
+        // 3. Check Loss Condition
         if (currentHealth <= 0)
         {
-            // Trigger Loss via NightManager
+            currentHealth = 0;
             if (NightManager.Instance != null)
             {
+                // Tell the manager we lost
                 NightManager.Instance.EndNightSequence(false, 0);
             }
         }
     }
 
-    
+    void UpdateHPDisplay()
+    {
+        if (hpImage != null)
+        {
+            // Simple percentage math (0.0 to 1.0)
+            hpImage.fillAmount = Mathf.Clamp01(currentHealth / maxHealth);
+        }
+    }
 }
