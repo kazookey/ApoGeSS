@@ -16,7 +16,6 @@ public class Barricade : MonoBehaviour
 
     void Start()
     {
-        currentHP = maxHP;
         // 1. Sync with GameManager (Rein's Day Logic)
         if (GameManager.Instance != null)
         {
@@ -71,12 +70,5 @@ public class Barricade : MonoBehaviour
         }
     }
 
-    void UpdateHPSlider()
-    {
-        if (hpSlider != null)
-        {
-            hpSlider.maxValue = maxHealth;
-            hpSlider.value = currentHealth;
-        }
-    }
+    
 }
