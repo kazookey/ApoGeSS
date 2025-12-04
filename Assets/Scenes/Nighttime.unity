@@ -1215,15 +1215,15 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.0028860029
-    y: 0.007692308
-    width: 0.992785
-    height: 0.98461545
+    x: 0.0028208746
+    y: 0.007518797
+    width: 0.9929478
+    height: 0.98245615
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3
+  orthographic size: 3.0625
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2607,7 +2607,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 5:00
+  m_text: 22:00
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e96554c34ecdf6e49abacd5e86f79410, type: 2}
   m_sharedMaterial: {fileID: -2003230325842797279, guid: e96554c34ecdf6e49abacd5e86f79410, type: 2}
@@ -2634,8 +2634,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
