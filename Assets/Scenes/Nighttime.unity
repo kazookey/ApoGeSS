@@ -1215,10 +1215,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.0028571428
-    y: 0.002538071
-    width: 0.9942857
-    height: 0.99492383
+    x: 0
+    y: 0
+    width: 0.99859744
+    height: 0.99750626
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -1518,11 +1518,11 @@ MonoBehaviour:
   - prefab: {fileID: 6374863167755638249, guid: 18412f3b457ecbf4297e07a4d4887ebc, type: 3}
     weight: 70
   - prefab: {fileID: 2987008270385168239, guid: 6f4c5ca2481c3e6419cd2664d3c283ae, type: 3}
-    weight: 30
+    weight: 0
   - prefab: {fileID: 631055445989948661, guid: 641586eab0202ac409f3ea347f1f40c8, type: 3}
-    weight: 0
+    weight: 15
   - prefab: {fileID: 5373690180826367153, guid: e27bc577c683bc749a015ed3cfd55100, type: 3}
-    weight: 0
+    weight: 15
   spawnPoints:
   - {fileID: 1524980950}
   - {fileID: 1971049816}

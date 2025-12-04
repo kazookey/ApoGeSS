@@ -21,12 +21,11 @@ public class Barricade : MonoBehaviour
     public void TakeDamage(int dmg)
     {
         currentHP -= dmg;
-        Debug.Log("Barricade HP: " + currentHP);
         UpdateHPSlider();
         if (currentHP <= 0)
         {
-            Debug.Log("Barricade destroyed!");
-            NightManager.Instance.RestartNight();
+            
+            NightManager.Instance.EndNightSequence(false, currentHP);
         }
     }
 

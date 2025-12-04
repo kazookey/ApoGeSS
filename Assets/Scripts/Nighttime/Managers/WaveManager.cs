@@ -54,6 +54,14 @@ public class WaveManager : MonoBehaviour
                 StopCoroutine(spawnCoroutine);
             }
         }
+
+        public void DespawnAllEnemies()
+        {
+            foreach (var enemy in FindObjectsOfType<Enemy>())
+            {
+                Destroy(enemy.gameObject);
+            }
+        }
        public static void EnemyKilled()
     {
        //for scoring/results
