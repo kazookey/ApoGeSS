@@ -499,7 +499,7 @@ TextureImporter:
         serializedVersion: 2
         x: 96
         y: 24
-        width: 14
+        width: 15
         height: 21
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -537,6 +537,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: colorable
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 56
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17e26fc8f649d524da9a3589aec3931c
+      internalID: 1204485809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -551,6 +573,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      colorable: 1204485809
       dog1: -2249235881954496865
       dog2: -958371130963422220
       dog3: -2618954728063591209
