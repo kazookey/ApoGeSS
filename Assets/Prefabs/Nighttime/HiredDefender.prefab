@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 7499879724510325268}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.184, y: 0.908, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -73,20 +73,20 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_SortingLayerID: -2019914031
+  m_SortingLayer: 8
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 1204485809, guid: e39785fb7a3cfe54b909f8dc654a1ad3, type: 3}
+  m_Color: {r: 0.9528302, g: 0.004494493, b: 0.004494493, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.5625, y: 0.8125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!1 &9000079649984136540
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 7755450112051395102}
   - component: {fileID: 2566993656339912235}
   - component: {fileID: 3366568352681389335}
+  - component: {fileID: 2616637670689793418}
   m_Layer: 0
   m_Name: HiredDefender
   m_TagString: Untagged
@@ -188,6 +189,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14055d12fd0c0664192ecd3fe9ec04bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defenderID: NPC_Defender_01
-  colorableSpritePart: {fileID: 2566993656339912235}
-  runSpeed: 8
+  fleeSpeed: 5
+  colorableSpritePart: {fileID: 8629783626113116288}
+--- !u!210 &2616637670689793418
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9000079649984136540}
+  m_Enabled: 1
+  m_SortingLayerID: -2019914031
+  m_SortingLayer: 8
+  m_SortingOrder: 0
+  m_SortAtRoot: 0

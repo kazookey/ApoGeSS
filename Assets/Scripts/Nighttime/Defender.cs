@@ -6,10 +6,20 @@ public class Defender : MonoBehaviour
 
     public float fleeSpeed = 5f;
     private bool isFleeing = false;
+    public SpriteRenderer colorableSpritePart; 
     
     void Start()
     {
-       
+        
+        if (colorableSpritePart != null)
+            {
+                colorableSpritePart.color = new Color(
+                    Random.Range(0f, 1f),
+                    Random.Range(0f, 1f),
+                    Random.Range(0f, 1f)
+                );
+            }
+
         NightManager.Instance.RegisterDefender(this);
     }
 
