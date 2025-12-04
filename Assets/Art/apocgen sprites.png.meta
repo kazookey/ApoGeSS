@@ -208,12 +208,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: apocgen sprites_3
+      name: window
       rect:
         serializedVersion: 2
-        x: 80
+        x: 105
         y: 58
-        width: 80
+        width: 55
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -1021,6 +1021,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: wall
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 58
+        width: 25
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2dd8f59ab472d0b46964a664e8db1f46
+      internalID: 311956529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -1050,7 +1072,6 @@ TextureImporter:
       apocgen sprites_19: 1753687813
       apocgen sprites_2: -6162142535314295968
       apocgen sprites_20: -1280875178
-      apocgen sprites_3: -5934214622860587316
       apocgen sprites_4: -2576901141049008340
       apocgen sprites_5: 7063231262750388689
       apocgen sprites_6: -6357916725750394565
@@ -1073,8 +1094,10 @@ TextureImporter:
       bullet2: -217247805
       molotov: -1924042580
       molotov1: 20139998
+      wall: 311956529
       water: -1654788195
       water2: 1055631826
+      window: -5934214622860587316
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

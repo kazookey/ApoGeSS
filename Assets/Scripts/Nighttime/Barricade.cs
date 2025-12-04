@@ -7,7 +7,7 @@ public class Barricade : MonoBehaviour
     public int currentHP;
 
     [Header("UI")]
-    public Slider hpSlider;
+     public Image hpImage; 
 
     public float damageCooldown = 0.5f;
     float damageTimer = 0f;
@@ -15,13 +15,13 @@ public class Barricade : MonoBehaviour
     void Start()
     {
         currentHP = maxHP;
-        UpdateHPSlider();
+        UpdateHPDisplay();
     }
 
     public void TakeDamage(int dmg)
     {
         currentHP -= dmg;
-        UpdateHPSlider();
+        UpdateHPDisplay();
         if (currentHP <= 0)
         {
             
@@ -29,12 +29,15 @@ public class Barricade : MonoBehaviour
         }
     }
 
-    void UpdateHPSlider()
+    void UpdateHPDisplay() 
     {
-        if (hpSlider != null)
+        if (hpImage != null)
         {
-            hpSlider.maxValue = maxHP;
-            hpSlider.value = currentHP;
+            
+            float healthRatio = (float)Mathf.Max(0, currentHP) / maxHP;
+            
+            
+            hpImage.fillAmount = healthRatio;
         }
     }
 
