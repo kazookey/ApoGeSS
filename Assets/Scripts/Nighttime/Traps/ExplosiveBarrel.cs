@@ -7,12 +7,20 @@ public class ExplosiveBarrel : TrapBase
 
     [Header("Visuals")]
     public Sprite destroyedSprite;
-    public GameObject explosionParticlesPrefab; 
+    public GameObject explosionParticlesPrefab;
+
+    private bool isDestroyed = false;
 
     public override void ActivateTrap()
     {
-        base.ActivateTrap();
+        
+        if (isDestroyed)
+        {
+            return;
+        }
 
+        base.ActivateTrap();
+        isDestroyed = true;
         
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius);
         foreach (var hit in hits)
@@ -30,6 +38,12 @@ public class ExplosiveBarrel : TrapBase
         if (sr != null && destroyedSprite != null)
         {
             sr.sprite = destroyedSprite;
+        }
+
+        Collider2D trapCollider = GetComponent<Collider2D>();
+        if (trapCollider != null)
+        {
+            trapCollider.enabled = false;
         }
     }
 }

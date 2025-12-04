@@ -10,15 +10,26 @@ public class Enemy : MonoBehaviour
     protected int currentHP;
     protected Transform player;
 
-    void Start()
+    protected void Start()
     {
         currentHP = maxHP;
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+        {
+            player = playerObject.transform;
+        }
+        else
+        {
+            Debug.LogError("Player object with tag 'Player' not found in the scene.");
+        }
     }
 
     void Update()
     {
-        Move();
+        if (!isStunned && player != null)
+        {
+            Move();
+        }
     }
 
     protected virtual void Move()

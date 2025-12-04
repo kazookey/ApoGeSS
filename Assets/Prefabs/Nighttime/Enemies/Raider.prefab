@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 3
-  moveSpeed: 1.5
+  moveSpeed: 0.5
   isStunned: 0
   throwRange: 4
   throwCooldown: 3

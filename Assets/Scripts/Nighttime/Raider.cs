@@ -14,7 +14,7 @@ public class Raider : Enemy
     
     void Start()
     {
-       
+        base.Start();
         barricadeTarget = GameObject.FindGameObjectWithTag("Barricade").transform;
        
     }
@@ -45,6 +45,9 @@ public class Raider : Enemy
 
         
         base.Move();
+
+        Vector2 dir = (barricadeTarget.position - transform.position).normalized;
+        transform.Translate(dir * moveSpeed * Time.deltaTime);
     }
 
     void ThrowMolotov()

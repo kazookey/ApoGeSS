@@ -5,11 +5,7 @@ public class Molotov : MonoBehaviour
     [Header("Projectile Settings")]
     public float launchSpeed = 5f;
     public float lifetime = 3f;
-    public float damageRadius = 2f;
-    public int damageAmount = 2;
-
-    [Header("Visuals")]
-    public GameObject fireEffectPrefab; // Assign an explosion/fire particle effect prefab
+    public int damageAmount = 2; 
 
     private Rigidbody2D rb;
     private Transform target;
@@ -17,9 +13,21 @@ public class Molotov : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        target = GameObject.FindGameObjectWithTag("Barricade").transform; // Target the Barricade
+        
+        GameObject barricadeObject = GameObject.FindGameObjectWithTag("Barricade");
+        if (barricadeObject != null)
+        {
+            target = barricadeObject.transform;
+        }
+        else
+        {
+            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+            if (playerObject != null)
+            {
+                target = playerObject.transform;
+            }
+        }
 
-     
         Destroy(gameObject, lifetime); 
     }
 
@@ -47,48 +55,26 @@ public class Molotov : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-       
-        if (collision.gameObject.CompareTag("Barricade") || collision.gameObject.CompareTag("Ground")) 
+    
+        if (collision.gameObject.CompareTag("Barricade")) 
         {
-            ExplodeAndDamage();
-        }
-    }
-
-    void ExplodeAndDamage()
-    {
-        
-        if (fireEffectPrefab != null)
-        {
-            Instantiate(fireEffectPrefab, transform.position, Quaternion.identity);
-        }
-
-       
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, damageRadius);
-        foreach (var hit in hitColliders)
-        {
-           
-            Barricade barricade = hit.GetComponent<Barricade>();
+            Barricade barricade = collision.gameObject.GetComponent<Barricade>();
             if (barricade != null && barricade.CanTakeDamage())
             {
                 barricade.TakeDamage(damageAmount);
             }
-            
-           
-            Enemy enemy = hit.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                enemy.TakeDamage(damageAmount);
-            }
+            Destroy(gameObject);
         }
+        else if (collision.gameObject.CompareTag("Player"))
+        {
         
-        
-        Destroy(gameObject);
+            PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(damageAmount);
+            }
+            Destroy(gameObject);
+        }
     }
-    
-    
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, damageRadius);
-    }
+
 }
