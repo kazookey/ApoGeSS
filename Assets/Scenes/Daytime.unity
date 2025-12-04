@@ -4555,6 +4555,7 @@ MonoBehaviour:
   timeText: {fileID: 192656822}
   creditsText: {fileID: 517668568}
   endDayButton: {fileID: 1144532316}
+  nextEventButton: {fileID: 1115036423}
   moneyPopupPrefab: {fileID: 2907952766608745150, guid: aa42d4a301b0bc84c9c2768bf9769c7a, type: 3}
   popupSpawnPoint: {fileID: 523893431}
   reportPanel: {fileID: 1994048676}
@@ -5926,7 +5927,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1144532317}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 954706466}
+        m_TargetAssemblyTypeName: DayManager, Assembly-CSharp
+        m_MethodName: GoToPreparationPhase
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1144532317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6286,7 +6299,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1191154603
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6317,7 +6330,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1191154602}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0

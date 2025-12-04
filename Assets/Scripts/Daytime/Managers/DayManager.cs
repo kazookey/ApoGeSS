@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using DG.Tweening;
-using UnityEngine.SceneManagement; // Needed for scene reloading if we test loop
+using DG.Tweening; // For Animations
+using UnityEngine.SceneManagement; // For Scene Loading
 
 public class DayManager : MonoBehaviour
 {
@@ -13,45 +13,50 @@ public class DayManager : MonoBehaviour
     [Header("UI References")]
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI creditsText;
-    public Button endDayButton; 
+    public Button endDayButton;       // Button to start Night
+    public Button nextEventButton;    // Button to trigger customers
     
-    [Header("Effects")]
-    public GameObject moneyPopupPrefab; // Drag your prefab here
-    public Transform popupSpawnPoint;   // Where the text appears (usually over the credits)
-    private int lastCreditsValue = -1;  // To track changes
+    [Header("Effects (Juice)")]
+    public GameObject moneyPopupPrefab; // The floating text prefab
+    public Transform popupSpawnPoint;   // Position near the credits text
+    private int lastCreditsValue = -1;  // Tracks changes to detect spending/earning
+    private int displayedCredits = -1;  // Used for the ticking animation
     
     [Header("Morning Report UI")]
-    public GameObject reportPanel;        // The Popup Window
-    public TextMeshProUGUI reportText;    // The text body inside
-    public Button closeReportButton;      // "OK" button
+    public GameObject reportPanel;        
+    public TextMeshProUGUI reportText;    
+    public Button closeReportButton;      
     
     [Header("Dependencies")]
     public SalesManager salesManager;
 
     private string[] timeLabels = { "Morning", "Noon", "Afternoon", "Evening" };
-    private int displayedCredits = -1; 
 
     void Start()
     {
         UpdateTimeUI();
-        endDayButton.interactable = false;
         
-        // Setup Report Button
+        // 1. Initialize Buttons
+        if(endDayButton != null) endDayButton.interactable = false;
+        if(nextEventButton != null) nextEventButton.interactable = true;
+        
+        // 2. Setup Report UI
         if(closeReportButton != null) closeReportButton.onClick.AddListener(CloseReport);
         if(reportPanel != null) reportPanel.SetActive(false);
 
-        // 1. Check if GameManager has a report waiting from the Night
+        // 3. Check for a pending report from Night (Scouts/Survival)
         if (!string.IsNullOrEmpty(GameManager.Instance.pendingMorningReport))
         {
             ShowMorningReport(GameManager.Instance.pendingMorningReport);
         }
         
+        // 4. Init Credit Tracking (prevent popup on start)
         lastCreditsValue = GameManager.Instance.credits;
     }
     
     void Update()
     {
-        // 1. Check for Money CHANGES (Logic)
+        // --- MONEY POPUP LOGIC ---
         if (GameManager.Instance.credits != lastCreditsValue)
         {
             int diff = GameManager.Instance.credits - lastCreditsValue;
@@ -59,73 +64,59 @@ public class DayManager : MonoBehaviour
             lastCreditsValue = GameManager.Instance.credits;
         }
 
-        // 2. Update the Visual Counter (Animation)
-        if (creditsText != null)
-        {
-            // If the visual number hasn't caught up to the real number yet...
-            if (displayedCredits != GameManager.Instance.credits)
-            {
-                // First frame init
-                if (displayedCredits == -1) displayedCredits = GameManager.Instance.credits;
-                
-                // DOTween the number for the "ticking" effect
-                DOTween.To(() => displayedCredits, x => displayedCredits = x, GameManager.Instance.credits, 0.5f)
-                    .OnUpdate(() => creditsText.text = $"Credits: ${displayedCredits}");
-            }
-        }
-        
-        // Credit Counter Logic
+        // --- TICKING COUNTER LOGIC ---
         if (creditsText != null)
         {
             int actualCredits = GameManager.Instance.credits;
             if (displayedCredits != actualCredits)
             {
-                displayedCredits = actualCredits;
-                creditsText.text = $"Credits: ${actualCredits}";
+                // First frame: Set instantly
+                if (displayedCredits == -1) 
+                {
+                    displayedCredits = actualCredits;
+                    creditsText.text = $"Credits: ${displayedCredits}";
+                }
+                else
+                {
+                    // Animation: Count up/down over 0.5 seconds
+                    // We assume this runs frequently enough that creating a tween here is fine,
+                    // but for heavy optimization, you'd kill previous tweens first.
+                    DOTween.To(() => displayedCredits, x => displayedCredits = x, actualCredits, 0.5f)
+                        .OnUpdate(() => creditsText.text = $"Credits: ${displayedCredits}");
+                }
             }
         }
 
-        // --- DEBUG TESTING ---
-        // Press 'M' to simulate a Morning Report instantly
+        // --- DEBUG: Test Morning Report ---
         if (Application.isEditor && Input.GetKeyDown(KeyCode.M))
         {
-            Debug.Log("Simulating Morning...");
-            GameManager.Instance.assignedScouts = 2; // Pretend we sent 2 people
-            GameManager.Instance.ProcessMorningResults(); // Roll dice
-            ShowMorningReport(GameManager.Instance.pendingMorningReport); // Show UI
+            Debug.Log("Debug: Simulating Morning...");
+            GameManager.Instance.assignedScouts = 2; 
+            GameManager.Instance.ProcessMorningResults(); 
+            ShowMorningReport(GameManager.Instance.pendingMorningReport);
         }
     }
 
-    public void ShowMorningReport(string message)
-    {
-        if (reportPanel != null)
-        {
-            reportPanel.SetActive(true);
-            reportText.text = message;
-            
-            // Clear the message so it doesn't show again next time
-            GameManager.Instance.pendingMorningReport = ""; 
-        }
-    }
-
-    public void CloseReport()
-    {
-        if (reportPanel != null) reportPanel.SetActive(false);
-    }
+    // --- TIME SYSTEM ---
 
     public void AdvanceTime(int cost = 1)
     {
+        // If already night, do nothing
+        if (currentTimeSlot >= maxTimeSlots) return;
+
         currentTimeSlot += cost;
 
+        // Process Passive Sales (Money from shelves)
+        if (salesManager != null)
+        {
+            salesManager.ProcessPassiveSales();
+        }
+
+        // Check if Day is Over
         if (currentTimeSlot >= maxTimeSlots)
         {
             currentTimeSlot = maxTimeSlots;
             EndOfDayReached();
-        }
-        
-        if (salesManager != null)
-        {
-            salesManager.ProcessPassiveSales();
         }
         
         UpdateTimeUI(); 
@@ -133,6 +124,8 @@ public class DayManager : MonoBehaviour
 
     void UpdateTimeUI()
     {
+        if (timeText == null) return;
+
         if (currentTimeSlot < timeLabels.Length)
             timeText.text = timeLabels[currentTimeSlot];
         else
@@ -142,20 +135,47 @@ public class DayManager : MonoBehaviour
     void EndOfDayReached()
     {
         Debug.Log("The sun has set. Prepare for night.");
-        endDayButton.interactable = true;
+        
+        // Disable Event Button (Can't trade anymore)
+        if(nextEventButton != null) nextEventButton.interactable = false;
+        
+        // Enable End Day Button (Can go to Night now)
+        if(endDayButton != null) endDayButton.interactable = true;
     }
 
+    // Called by "End Day" Button
     public void GoToPreparationPhase()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Nighttime"); 
+        SceneManager.LoadScene("Nighttime"); 
+    }
+
+    // --- REPORT SYSTEM ---
+
+    public void ShowMorningReport(string message)
+    {
+        if (reportPanel != null)
+        {
+            reportPanel.SetActive(true);
+            reportText.text = message;
+            
+            // Clear message so it doesn't appear again if we reload scene
+            GameManager.Instance.pendingMorningReport = ""; 
+        }
+    }
+
+    public void CloseReport()
+    {
+        if (reportPanel != null) reportPanel.SetActive(false);
     }
     
+    // --- EFFECTS SYSTEM ---
+
     void SpawnMoneyPopup(int amount)
     {
         if (moneyPopupPrefab != null && popupSpawnPoint != null)
         {
             GameObject popup = Instantiate(moneyPopupPrefab, popupSpawnPoint);
-            // Reset scale just in case
+            // Reset scale to 1 (sometimes UI prefabs spawn with weird scales)
             popup.transform.localScale = Vector3.one; 
             
             MoneyPopup script = popup.GetComponent<MoneyPopup>();
