@@ -78,8 +78,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1777627307
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -5469498665646384619, guid: e39785fb7a3cfe54b909f8dc654a1ad3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -156,8 +156,8 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0.75021017}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 1, y: 1.5}
+    pivot: {x: 0.59530777, y: -0.00000017339534}
+    oldSize: {x: 0.875, y: 1.375}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -180,6 +180,8 @@ MonoBehaviour:
   bulletPrefab: {fileID: 0}
   firePoint: {fileID: 0}
   bulletSpeed: 12
+  ammoItem: {fileID: 0}
+  useAmmo: 0
 --- !u!114 &4552640214604196237
 MonoBehaviour:
   m_ObjectHideFlags: 0

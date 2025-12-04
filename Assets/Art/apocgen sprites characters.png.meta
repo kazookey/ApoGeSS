@@ -252,15 +252,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player1
+      name: player stand
       rect:
         serializedVersion: 2
-        x: 79
-        y: 47
-        width: 16
-        height: 24
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 80
+        y: 48
+        width: 14
+        height: 22
+      alignment: 9
+      pivot: {x: 0.59530777, y: -0.00000017339534}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -277,12 +277,12 @@ TextureImporter:
       name: player2
       rect:
         serializedVersion: 2
-        x: 79
-        y: 23
-        width: 16
-        height: 24
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 80
+        y: 24
+        width: 14
+        height: 22
+      alignment: 9
+      pivot: {x: 0.56836355, y: -0.00000008669767}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -455,10 +455,10 @@ TextureImporter:
         serializedVersion: 2
         x: 80
         y: 0
-        width: 16
-        height: 23
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 14
+        height: 22
+      alignment: 9
+      pivot: {x: 0.6734598, y: 0.008672897}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -467,6 +467,72 @@ TextureImporter:
       bones: []
       spriteID: 6f909caff13e332a0800000000000000
       internalID: -6758808889262011914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: npc stand
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 15
+        height: 21
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ad43e9a91fd4a946b701d88fcd05e48
+      internalID: -275056298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: npc2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 24
+        width: 14
+        height: 21
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2d909b8400e18640865dc9d46ff6458
+      internalID: 1711993372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: npc1
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 15
+        height: 21
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e9b403e3fbd016489f827a47bddfd13
+      internalID: -1399909253
       vertices: []
       indices: 
       edges: []
@@ -491,7 +557,10 @@ TextureImporter:
       ghoul1: -6710345431738859708
       ghoul2: -4492256259344252322
       ghoul3: -3961376349133392054
-      player1: -5469498665646384619
+      npc stand: -275056298
+      npc1: -1399909253
+      npc2: 1711993372
+      player stand: -5469498665646384619
       player2: 3618737226965718950
       player3: -6758808889262011914
       raider1: 3213335501306364342

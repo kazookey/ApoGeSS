@@ -1,7 +1,9 @@
 using UnityEngine;
 
+
 public class BearTrap : TrapBase
 {
+
     void OnTriggerEnter2D(Collider2D col)
     {
         if (isActivated) return;
@@ -9,8 +11,12 @@ public class BearTrap : TrapBase
 
         
         Enemy e = col.GetComponent<Enemy>();
-        e.moveSpeed = 0;
 
+        if (e.isStunned) return;
+
+        
+        e.isStunned = true;
+        e.moveSpeed = 0;
        
         ActivateTrap();
     }

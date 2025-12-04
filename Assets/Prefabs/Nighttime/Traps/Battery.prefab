@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7908780260844699326}
   - component: {fileID: 6079119676011103810}
   - component: {fileID: 7139995254897698824}
+  - component: {fileID: 2147474811752244433}
   m_Layer: 0
   m_Name: Battery
   m_TagString: Untagged
@@ -74,8 +75,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1777627307
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -2576901141049008340, guid: 72e3133ee946c8d42b8bd8d8484ce722, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -87,7 +88,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!114 &7139995254897698824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,3 +106,49 @@ MonoBehaviour:
   destroyAfterActivation: 0
   destroyDelay: 0.1
   damage: 999
+--- !u!61 &2147474811752244433
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3088068614426618825}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.0030698776, y: 0.000000029802322}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.71428573, y: 0.16666667}
+    oldSize: {x: 0.875, y: 0.375}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.89563084, y: 0.40177017}
+  m_EdgeRadius: 0
