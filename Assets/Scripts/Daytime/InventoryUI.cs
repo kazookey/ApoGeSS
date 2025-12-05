@@ -1,28 +1,52 @@
 using UnityEngine;
 using System.Collections.Generic;
+using DG.Tweening; // Added
 
 public class InventoryUI : MonoBehaviour
 {
     [Header("References")]
-    public Transform itemsContainer;   // The object holding the slots (Content)
-    public GameObject slotPrefab;      // The template we just made
+    public Transform itemsContainer;
+    public GameObject slotPrefab;
+    
+    // Drag the "Inventory Window" (the parent panel) here
+    public GameObject inventoryWindow; 
 
-    // This runs automatically whenever you set the GameObject to Active
     void OnEnable()
     {
         UpdateInventoryDisplay();
     }
 
+    // --- NEW METHODS FOR BUTTONS ---
+    public void OpenInventory()
+    {
+        GameObject target = inventoryWindow != null ? inventoryWindow : gameObject;
+        
+        target.SetActive(true);
+        target.transform.localScale = Vector3.zero;
+        target.transform.DOScale(1f, 0.3f).SetEase(Ease.OutBack);
+        
+        // Force refresh just in case
+        UpdateInventoryDisplay();
+    }
+
+    public void CloseInventory()
+    {
+        GameObject target = inventoryWindow != null ? inventoryWindow : gameObject;
+        
+        target.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() => 
+        {
+            target.SetActive(false);
+        });
+    }
+    // -------------------------------
+
     public void UpdateInventoryDisplay()
     {
-        // 1. Clear existing slots (to prevent duplicates)
         foreach (Transform child in itemsContainer)
         {
             Destroy(child.gameObject);
         }
 
-        // 2. Loop through the Global Inventory
-        // We use GameManager.Instance because it holds the real data
         foreach (KeyValuePair<ItemData, int> entry in GameManager.Instance.inventory)
         {
             ItemData item = entry.Key;
@@ -30,10 +54,7 @@ public class InventoryUI : MonoBehaviour
 
             if (count > 0)
             {
-                // Create a new slot
                 GameObject newSlot = Instantiate(slotPrefab, itemsContainer);
-                
-                // Setup the data
                 InventorySlot slotScript = newSlot.GetComponent<InventorySlot>();
                 if (slotScript != null)
                 {

@@ -22,12 +22,11 @@ public class NegotiationManager : MonoBehaviour
     public Button declineButton;
 
     private ItemData currentItem;
-    private int askingPrice; // What THEY want
-    private int marketValue; // What it's WORTH
+    private int basePrice;
+    private int askingPrice; 
 
     void Start()
     {
-        // Ensure panel is hidden
         if (negotiationCanvasGroup != null)
         {
             negotiationCanvasGroup.alpha = 0;
@@ -41,42 +40,37 @@ public class NegotiationManager : MonoBehaviour
         offerSlider.onValueChanged.AddListener(UpdateSliderText);
     }
 
-    // UPDATED: Now takes a multiplier!
     public void OpenNegotiation(ItemData item, float priceMultiplier)
     {
         currentItem = item;
-        marketValue = item.baseValue;
-        
-        // Calculate the Trader's personal price
-        askingPrice = Mathf.RoundToInt(marketValue * priceMultiplier);
+        basePrice = item.baseValue;
+        askingPrice = Mathf.RoundToInt(basePrice * priceMultiplier);
 
-        // 1. Enable GameObject
         panel.SetActive(true);
         
-        // 2. Reset UI State
         confirmButton.interactable = true;
         declineButton.interactable = true;
         resultText.text = "";
 
-        // 3. Setup Text/Slider
         promptText.text = $"A Scavenger wants to sell <b>{item.itemName}</b>.";
-        
-        // SHOW BOTH PRICES so the player sees the "Deal"
-        marketValueText.text = $"Market Value: ${marketValue}\nAsking Price: ${askingPrice}";
+        marketValueText.text = $"Market Value: ${basePrice}\nAsking Price: ${askingPrice}";
 
-        // Slider logic: Center it around the ASKING price
         offerSlider.minValue = 1;
-        offerSlider.maxValue = askingPrice * 1.5f; 
-        offerSlider.value = askingPrice; // Default to what they want
+        offerSlider.maxValue = askingPrice * 1.5f;
+        offerSlider.value = askingPrice; 
 
         UpdateSliderText(offerSlider.value);
 
-        // 4. Fade In Animation
+        // --- ANIMATION UPDATE ---
         if (negotiationCanvasGroup != null)
         {
             negotiationCanvasGroup.alpha = 0; 
             negotiationCanvasGroup.blocksRaycasts = true;
-            negotiationCanvasGroup.DOFade(1f, 0.5f);
+            
+            // Combine Fade AND Scale
+            negotiationCanvasGroup.DOFade(1f, 0.3f);
+            panel.transform.localScale = Vector3.zero;
+            panel.transform.DOScale(1f, 0.3f).SetEase(Ease.OutBack);
         }
     }
 
@@ -131,7 +125,10 @@ public class NegotiationManager : MonoBehaviour
         if (negotiationCanvasGroup != null)
         {
             negotiationCanvasGroup.blocksRaycasts = false;
-            negotiationCanvasGroup.DOFade(0f, 0.5f).OnComplete(() => 
+            
+            // Scale down AND Fade out
+            negotiationCanvasGroup.DOFade(0f, 0.3f);
+            panel.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() => 
             {
                 panel.SetActive(false);
                 if(dayManager != null) dayManager.AdvanceTime(1);
@@ -146,16 +143,11 @@ public class NegotiationManager : MonoBehaviour
 
     bool CheckIfAccepted(int offer)
     {
-        // The success depends on how close you are to THEIR Asking Price
-        // (Not the market value)
         float ratio = (float)offer / askingPrice;
-        
         float reputationBonus = (GameManager.Instance.reputation / 100f) * 0.10f;
         float successChance = ratio + reputationBonus;
 
-        // Hard Limit: If you offer >= Asking Price, it's 100% success
         if (ratio >= 1.0f) return true;
-
         return Random.value <= successChance;
     }
 }
