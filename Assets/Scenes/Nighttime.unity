@@ -1682,8 +1682,8 @@ MonoBehaviour:
   - {fileID: 1524980950}
   - {fileID: 1971049816}
   - {fileID: 1971049816}
-  minSpawnY: -5
-  maxSpawnY: 5
+  minSpawnY: -2.8
+  maxSpawnY: 1.5
   spawnDelay: 1
 --- !u!4 &365661183
 Transform:
