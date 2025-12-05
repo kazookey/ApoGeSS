@@ -541,12 +541,12 @@ TextureImporter:
       name: colorable
       rect:
         serializedVersion: 2
-        x: 118
-        y: 56
-        width: 9
-        height: 13
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 112
+        y: 48
+        width: 15
+        height: 21
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
