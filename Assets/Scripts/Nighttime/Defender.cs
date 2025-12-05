@@ -66,12 +66,19 @@ public class HiredDefender : MonoBehaviour
 
         foreach (var e in enemies)
         {
-            // Only detect enemies LEFT of the defender
-            if (e.transform.position.x > transform.position.x)
+            Vector3 pos = e.transform.position;
+
+            // Must be LEFT of the defender
+            if (pos.x >= transform.position.x)
                 continue;
 
-            float dist = Vector3.Distance(transform.position, e.transform.position);
-            if (dist < closestDist && dist < detectionRange)
+            // Must be within detection range (horizontal or full 2D distance)
+            float dist = Vector3.Distance(transform.position, pos);
+            if (dist > detectionRange)
+                continue;
+
+            // Track the closest valid enemy
+            if (dist < closestDist)
             {
                 closestDist = dist;
                 closest = e.transform;
@@ -80,6 +87,7 @@ public class HiredDefender : MonoBehaviour
 
         targetEnemy = closest;
     }
+
 
     // -----------------------
     // VERTICAL MOVEMENT

@@ -186,6 +186,8 @@ MonoBehaviour:
   bulletSpeed: 12
   ammoItem: {fileID: 0}
   useAmmo: 0
+  fireCooldown: 0.25
+  inputBufferTime: 0.15
 --- !u!114 &4552640214604196237
 MonoBehaviour:
   m_ObjectHideFlags: 0

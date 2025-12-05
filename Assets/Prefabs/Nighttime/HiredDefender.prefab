@@ -318,7 +318,7 @@ MonoBehaviour:
   bulletSpeed: 12
   shootInterval: 0.75
   enemyTag: Enemy
-  detectionRange: 12
+  detectionRange: 8
   fleeSpeed: 5
 --- !u!210 &2616637670689793418
 SortingGroup:
