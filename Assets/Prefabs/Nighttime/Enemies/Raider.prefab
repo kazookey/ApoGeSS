@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8172160601751669648}
   - component: {fileID: 7552952003198326290}
   - component: {fileID: 2855951593839094788}
+  - component: {fileID: 6430583876827779270}
   m_Layer: 6
   m_Name: Raider
   m_TagString: Enemy
@@ -205,6 +206,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!210 &6430583876827779270
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631055445989948661}
+  m_Enabled: 1
+  m_SortingLayerID: 776886939
+  m_SortingLayer: 4
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &4584488389294271014
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,9 +291,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 776886939
+  m_SortingLayer: 4
+  m_SortingOrder: -1
   m_Sprite: {fileID: -4756028443593143600, guid: 12de608bb2f1ed74ab1c74acd56f6099, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

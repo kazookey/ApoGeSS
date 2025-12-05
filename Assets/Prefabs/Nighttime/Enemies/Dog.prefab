@@ -73,9 +73,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 776886939
+  m_SortingLayer: 4
+  m_SortingOrder: -1
   m_Sprite: {fileID: -4756028443593143600, guid: 12de608bb2f1ed74ab1c74acd56f6099, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 554984633676006102}
   - component: {fileID: 6152507261732176988}
   - component: {fileID: 4525175329140233489}
+  - component: {fileID: 7845902061573657674}
   m_Layer: 6
   m_Name: Dog
   m_TagString: Enemy
@@ -289,3 +290,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!210 &7845902061573657674
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5373690180826367153}
+  m_Enabled: 1
+  m_SortingLayerID: 776886939
+  m_SortingLayer: 4
+  m_SortingOrder: 0
+  m_SortAtRoot: 0

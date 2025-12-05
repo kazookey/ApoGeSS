@@ -4153,7 +4153,7 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 100
   hpImage: {fileID: 1656680466}
-  damageCooldown: 0.5
+  damageCooldown: 0.25
 --- !u!1001 &1106589384
 PrefabInstance:
   m_ObjectHideFlags: 0
