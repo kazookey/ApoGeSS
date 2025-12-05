@@ -5698,7 +5698,7 @@ MonoBehaviour:
   defenderSpawnPoints:
   - {fileID: 1069502329}
   - {fileID: 2025347945}
-  nightdurationSeconds: 150
+  nightdurationSeconds: 90
   currentState: 0
 --- !u!4 &957307909
 Transform:
