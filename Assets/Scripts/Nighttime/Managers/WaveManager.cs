@@ -21,8 +21,15 @@ public class WaveManager : MonoBehaviour
     [Header("Spawn Range")]
     public float minSpawnY = -5f;
     public float maxSpawnY = 5f;
+
     [Header("Wave Settings")]
-    public float spawnDelay = 1f; 
+    public float minSpawnDelay = 0.5f;
+    public float maxSpawnDelay = 2f;
+    public int minEnemiesPerWave = 3;
+    public int maxEnemiesPerWave = 8;
+    public float timeBetweenWaves = 5f; // delay between waves
+
+
     
     private Coroutine spawnCoroutine;
    
@@ -64,13 +71,31 @@ public class WaveManager : MonoBehaviour
     {
         while (true)
         {
-            Transform lane = spawnPoints[Random.Range(0, spawnPoints.Length)];
-            Vector3 spawnPosition = new Vector3(lane.position.x, Random.Range(minSpawnY, maxSpawnY), lane.position.z);
-            Instantiate(GetWeightedEnemy(), spawnPosition, Quaternion.identity);
+            // Determine random number of enemies for this wave
+            int enemiesThisWave = Random.Range(minEnemiesPerWave, maxEnemiesPerWave + 1);
 
-            yield return new WaitForSeconds(spawnDelay);
+            for (int i = 0; i < enemiesThisWave; i++)
+            {
+                // Pick a random lane
+                Transform lane = spawnPoints[Random.Range(0, spawnPoints.Length)];
+        
+                // Pick a random Y position within range
+                Vector3 spawnPosition = new Vector3(lane.position.x, Random.Range(minSpawnY, maxSpawnY), lane.position.z);
+
+                // Spawn the enemy
+                Instantiate(GetWeightedEnemy(), spawnPosition, Quaternion.identity);
+
+                // Wait for a random time before spawning next enemy in the wave
+                float waitTime = Random.Range(minSpawnDelay, maxSpawnDelay);
+                yield return new WaitForSeconds(waitTime);
+            }
+
+            // Wait before starting the next wave
+            yield return new WaitForSeconds(timeBetweenWaves);
         }
     }
+
+
 
     public void StopSpawning()
         {

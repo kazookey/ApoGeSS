@@ -2133,7 +2133,11 @@ MonoBehaviour:
   - {fileID: 1971049816}
   minSpawnY: -1.25
   maxSpawnY: 1.5
-  spawnDelay: 1
+  minSpawnDelay: 0.25
+  maxSpawnDelay: 1
+  minEnemiesPerWave: 2
+  maxEnemiesPerWave: 5
+  timeBetweenWaves: 2
 --- !u!4 &365661183
 Transform:
   m_ObjectHideFlags: 0
@@ -5721,7 +5725,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1014518684}
   - component: {fileID: 1014518687}
-  - component: {fileID: 1014518686}
   - component: {fileID: 1014518685}
   m_Layer: 0
   m_Name: BotMiddleCrate3 (2)
@@ -5791,19 +5794,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.75, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1014518686
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1014518683}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8002f5b9b68da645b1ff0e8c97b62e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  root: {fileID: 1073319728}
 --- !u!212 &1014518687
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5968,7 +5958,7 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 100
   hpImage: {fileID: 1656680466}
-  damageCooldown: 0.15
+  damageCooldown: 0.2
 --- !u!1001 &1106589384
 PrefabInstance:
   m_ObjectHideFlags: 0
