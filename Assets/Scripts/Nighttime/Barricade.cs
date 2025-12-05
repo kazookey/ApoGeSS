@@ -4,11 +4,12 @@ using UnityEngine.UI;
 public class Barricade : MonoBehaviour
 {
     [Header("Settings")]
-    public float maxHealth = 100f; // Standardized to float
+    public float maxHealth = 100f;
     public float currentHealth;
+    private float startingNightHealth; // Store health at start of night
 
     [Header("UI")]
-    public Image hpImage; // Drag your "Health Bar Fill" image here
+    public Image hpImage;
 
     [Header("Invincibility")]
     public float damageCooldown = 0.5f;
@@ -16,16 +17,19 @@ public class Barricade : MonoBehaviour
 
     void Start()
     {
-        // 1. LOAD Global Health (The Link)
+        // Load health from GameManager
         if (GameManager.Instance != null)
         {
             currentHealth = GameManager.Instance.barricadeHealth;
         }
         else
         {
-            currentHealth = maxHealth; // Fallback for testing Night scene alone
+            currentHealth = maxHealth; 
         }
-        
+
+        // Save the starting health for this night
+        startingNightHealth = currentHealth;
+
         UpdateHPDisplay();
     }
 
@@ -45,11 +49,11 @@ public class Barricade : MonoBehaviour
     public void TakeDamage(float dmg)
     {
         if (!CanTakeDamage()) return;
-        
-        damageTimer = damageCooldown; // Reset cooldown
+
+        damageTimer = damageCooldown;
         currentHealth -= dmg;
 
-        // 2. SAVE Global Health Immediately (The Link)
+        // Save health globally
         if (GameManager.Instance != null)
         {
             GameManager.Instance.barricadeHealth = currentHealth;
@@ -58,15 +62,19 @@ public class Barricade : MonoBehaviour
         Debug.Log($"Barricade Hit! HP: {currentHealth}");
         UpdateHPDisplay();
 
-        // 3. Check Loss Condition
         if (currentHealth <= 0)
         {
             currentHealth = 0;
+            UpdateHPDisplay();
+
+            // Tell NightManager we lost
             if (NightManager.Instance != null)
             {
-                // Tell the manager we lost
                 NightManager.Instance.EndNightSequence(false, 0);
             }
+
+            // Reset health to starting night value
+            ResetHealthToStartOfNight();
         }
     }
 
@@ -74,8 +82,21 @@ public class Barricade : MonoBehaviour
     {
         if (hpImage != null)
         {
-            // Simple percentage math (0.0 to 1.0)
             hpImage.fillAmount = Mathf.Clamp01(currentHealth / maxHealth);
         }
+    }
+
+    void ResetHealthToStartOfNight()
+    {
+        currentHealth = startingNightHealth;
+
+        // Also update GameManager so next night starts with this value
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.barricadeHealth = currentHealth;
+        }
+
+        Debug.Log($"Barricade health reset to start-of-night value: {currentHealth}");
+        UpdateHPDisplay();
     }
 }
