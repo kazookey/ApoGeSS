@@ -475,10 +475,10 @@ TextureImporter:
       name: Floor
       rect:
         serializedVersion: 2
-        x: 128
-        y: 26
-        width: 32
-        height: 32
+        x: 144
+        y: 42
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1030,7 +1030,7 @@ TextureImporter:
         width: 25
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1039,6 +1039,28 @@ TextureImporter:
       bones: []
       spriteID: 2dd8f59ab472d0b46964a664e8db1f46
       internalID: 311956529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: apocgen sprites_3
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 42
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 107cce5b058b569449aa0cefd36a8716
+      internalID: 1416651764
       vertices: []
       indices: 
       edges: []
@@ -1072,6 +1094,7 @@ TextureImporter:
       apocgen sprites_19: 1753687813
       apocgen sprites_2: -6162142535314295968
       apocgen sprites_20: -1280875178
+      apocgen sprites_3: 1416651764
       apocgen sprites_4: -2576901141049008340
       apocgen sprites_5: 7063231262750388689
       apocgen sprites_6: -6357916725750394565

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using DG.Tweening; // Added
+using DG.Tweening;
 
 public class StaffManager : MonoBehaviour
 {
@@ -12,29 +12,36 @@ public class StaffManager : MonoBehaviour
     public TextMeshProUGUI defenderCountText;
 
     [Header("Buttons")]
-    public Button closeButton;
+    public Button toggleButton;
 
     private int currentScouts;
     private int currentDefenders;
 
     void Start()
     {
-        if(staffPanel != null) staffPanel.SetActive(false);
-        if(closeButton != null) closeButton.onClick.AddListener(CloseStaffMenu);
+        if (staffPanel != null) staffPanel.SetActive(false);
+        if (toggleButton != null) toggleButton.onClick.AddListener(ToggleStaffMenu);
     }
 
-    public void OpenStaffMenu()
+    public void ToggleStaffMenu()
+    {
+        if (staffPanel.activeSelf)
+            CloseStaffMenu();
+        else
+            OpenStaffMenu();
+    }
+
+    void OpenStaffMenu()
     {
         currentScouts = GameManager.Instance.assignedScouts;
         currentDefenders = GameManager.Instance.assignedDefenders;
-        
+
         staffPanel.SetActive(true);
-        
+
         // --- ANIMATION ---
         staffPanel.transform.localScale = Vector3.zero;
         staffPanel.transform.DOScale(1f, 0.3f).SetEase(Ease.OutBack);
-        // -----------------
-        
+
         UpdateUI();
     }
 
@@ -42,15 +49,14 @@ public class StaffManager : MonoBehaviour
     {
         GameManager.Instance.assignedScouts = currentScouts;
         GameManager.Instance.assignedDefenders = currentDefenders;
-        
+
         // --- ANIMATION ---
-        staffPanel.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() => 
+        staffPanel.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() =>
         {
             staffPanel.SetActive(false);
         });
     }
 
-    // ... (Keep ModifyScouts, ModifyDefenders, GetUnassignedCount, UpdateUI same as before) ...
     public void ModifyScouts(int amount)
     {
         int unassigned = GetUnassignedCount();

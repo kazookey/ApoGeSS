@@ -26,6 +26,31 @@ public class WaveManager : MonoBehaviour
     
     private Coroutine spawnCoroutine;
    
+    // --- GIZMOS ---
+    void OnDrawGizmos()
+    {
+        if (spawnPoints == null || spawnPoints.Length == 0)
+            return;
+
+        Gizmos.color = Color.cyan;
+        foreach (var lane in spawnPoints)
+        {
+            if (lane == null) continue;
+
+            // Draw vertical line showing min-max Y spawn range
+            Vector3 bottom = new Vector3(lane.position.x, minSpawnY, lane.position.z);
+            Vector3 top = new Vector3(lane.position.x, maxSpawnY, lane.position.z);
+            Gizmos.DrawLine(bottom, top);
+
+            // Draw spheres at min and max Y
+            Gizmos.DrawSphere(bottom, 0.3f);
+            Gizmos.DrawSphere(top, 0.3f);
+
+            // Draw a small sphere at the lane base
+            Gizmos.DrawSphere(lane.position, 0.2f);
+        }
+    }
+    
     void Awake()
     {
         Instance = this;

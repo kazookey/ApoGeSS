@@ -1,125 +1,112 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using DG.Tweening; // IMPORTANT: Requires DOTween plugin
+using DG.Tweening;
 using System;
 
 public class DialogueManager : MonoBehaviour
 {
     [Header("UI References")]
-    public CanvasGroup dialogueCanvasGroup; // The parent panel
-    public CanvasGroup npcImageCanvasGroup; // The character portrait
-    public Image npcImage;                  // The actual sprite renderer
-    public TextMeshProUGUI dialogueText;    // The text box
-    public Button continueButton;           // The invisible full-screen button
+    public CanvasGroup dialogueCanvasGroup;
+    public CanvasGroup npcImageCanvasGroup;
+    public Image npcImage;
+    public TextMeshProUGUI dialogueText;
+    public Button continueButton;
 
     [Header("Settings")]
     public float fadeDuration = 0.5f;
-    public float typingSpeed = 20f; // Characters per second
+    public float typingSpeed = 20f;
 
-    // Internal State
-    private int conversationStage = 0; 
-    // 0 = Intro ("X wants to negotiate")
-    // 1 = Spiel (Actual dialogue)
-    
+    private int conversationStage = 0;
     private string currentSpiel;
     private Action onConversationFinished;
+
     private bool isTyping = false;
-    private Tween typingTween; // Stores the animation so we can stop it
+    private Tween typingTween;
+    private string currentFullText; // Always holds the correct full text
 
     void Start()
     {
-        // Ensure everything is hidden at start
+        // Hide at start
         if (dialogueCanvasGroup != null)
         {
             dialogueCanvasGroup.alpha = 0;
             dialogueCanvasGroup.blocksRaycasts = false;
         }
-        
+
         if (continueButton != null)
             continueButton.onClick.AddListener(OnContinueClicked);
     }
 
     public void StartInteraction(string npcName, Sprite portrait, string spiel, Action onFinish)
     {
-        // 1. Setup Data
+        // Store data
         currentSpiel = spiel;
         onConversationFinished = onFinish;
-        
-        if (npcImage != null) npcImage.sprite = portrait;
 
-        // Reset Visuals
-        if (npcImageCanvasGroup != null) npcImageCanvasGroup.alpha = 0; // Hide face initially
+        if (npcImage != null)
+            npcImage.sprite = portrait;
+
+        npcImageCanvasGroup.alpha = 0;
         dialogueText.text = "";
         conversationStage = 0;
 
-        // 2. Fade In Panel
-        dialogueCanvasGroup.blocksRaycasts = true; // Enable clicking
-        dialogueCanvasGroup.DOFade(1f, fadeDuration).OnComplete(() => 
+        // Fade in main panel
+        dialogueCanvasGroup.blocksRaycasts = true;
+        dialogueCanvasGroup.DOFade(1f, fadeDuration).OnComplete(() =>
         {
-            // 3. Show Intro Text
-            string introText = $"<b>{npcName}</b> would like to negotiate with you.";
-            ShowText(introText);
+            string intro = $"<b>{npcName}</b> would like to negotiate with you.";
+            ShowText(intro);
         });
     }
 
-    // Helper to animate text (Using "Option 1" - Manual Counter)
+    // Typing effect using counter tween
     void ShowText(string content)
     {
         isTyping = true;
-        dialogueText.text = ""; // Clear
-        
-        float duration = content.Length / typingSpeed;
-        int currentCharacterCount = 0;
+        dialogueText.text = "";
+        currentFullText = content; // Save the final text to fix skipping
 
-        // "Generic" Tween: Animate a number from 0 to total characters
-        typingTween = DOTween.To(() => currentCharacterCount, x => currentCharacterCount = x, content.Length, duration)
+        float duration = content.Length / typingSpeed;
+        int currentChar = 0;
+
+        typingTween = DOTween.To(() => currentChar, x => currentChar = x, content.Length, duration)
             .SetEase(Ease.Linear)
-            .OnUpdate(() => 
+            .OnUpdate(() =>
             {
-                // Every frame, update the text to show X characters
-                if (currentCharacterCount <= content.Length)
-                    dialogueText.text = content.Substring(0, currentCharacterCount);
+                dialogueText.text = currentFullText.Substring(0, currentChar);
             })
-            .OnComplete(() => isTyping = false);
+            .OnComplete(() =>
+            {
+                isTyping = false;
+            });
     }
 
     void OnContinueClicked()
     {
-        // Case A: Player clicks while text is still typing -> Skip to end
+        // CASE 1 — Skip typing
         if (isTyping)
         {
-            typingTween.Kill(); // Stop the animation
-            
-            // Show the full text immediately
-            if(conversationStage == 0)
-                dialogueText.text = $"<b>{dialogueText.text.Replace("...", "")}</b> would like to negotiate with you."; // Just using the current text logic
-            else 
-                dialogueText.text = currentSpiel;
-            
-            // Fix: ensure text is fully visible based on stage logic
-            if(conversationStage == 0 && !dialogueText.text.Contains("negotiate"))
-                 dialogueText.text = "The Scavenger would like to negotiate with you.";
-
+            typingTween.Kill();
+            dialogueText.text = currentFullText; // Show the correct full text immediately
             isTyping = false;
             return;
         }
 
-        // Case B: Text finished, move to next stage
+        // CASE 2 — Typing finished, move to next stage
         if (conversationStage == 0)
         {
-            // Move to Stage 1: The Spiel
             conversationStage = 1;
-            
-            // Fade In NPC Face
-            if (npcImageCanvasGroup != null) npcImageCanvasGroup.DOFade(1f, fadeDuration);
-            
-            // Start Typing Spiel
+
+            // Fade in portrait
+            npcImageCanvasGroup.DOFade(1f, fadeDuration);
+
+            // Show the spiel
             ShowText(currentSpiel);
         }
-        else if (conversationStage == 1)
+        else
         {
-            // Conversation Over
+            // End dialogue
             EndDialogue();
         }
     }
@@ -127,11 +114,9 @@ public class DialogueManager : MonoBehaviour
     void EndDialogue()
     {
         dialogueCanvasGroup.blocksRaycasts = false;
-        
-        // Fade Out Dialogue Panel
-        dialogueCanvasGroup.DOFade(0f, fadeDuration).OnComplete(() => 
+
+        dialogueCanvasGroup.DOFade(0f, fadeDuration).OnComplete(() =>
         {
-            // Trigger the callback (Opens Negotiation View)
             onConversationFinished?.Invoke();
         });
     }

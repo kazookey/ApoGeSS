@@ -15,6 +15,10 @@ public class DayManager : MonoBehaviour
     public TextMeshProUGUI creditsText;
     public Button endDayButton; 
     public Button nextEventButton;
+
+    [Header("Button Text")]
+    public TextMeshProUGUI endDayButtonText;
+    public TextMeshProUGUI nextEventButtonText;
     
     [Header("Effects")]
     public GameObject moneyPopupPrefab;
@@ -35,12 +39,26 @@ public class DayManager : MonoBehaviour
     void Start()
     {
         UpdateTimeUI();
+
+        // --- NEW: End Day is ALWAYS allowed
+        if (endDayButton != null)
+        {
+            endDayButton.interactable = true;
+            SetButtonTextState(endDayButton, endDayButtonText, true);
+        }
+
+        // Next Event available at start
+        if (nextEventButton != null)
+        {
+            nextEventButton.interactable = true;
+            SetButtonTextState(nextEventButton, nextEventButtonText, true);
+        }
         
-        if(endDayButton != null) endDayButton.interactable = false;
-        if(nextEventButton != null) nextEventButton.interactable = true;
-        
-        if(closeReportButton != null) closeReportButton.onClick.AddListener(CloseReport);
-        if(reportPanel != null) reportPanel.SetActive(false);
+        if (closeReportButton != null)
+            closeReportButton.onClick.AddListener(CloseReport);
+
+        if (reportPanel != null)
+            reportPanel.SetActive(false);
 
         if (!string.IsNullOrEmpty(GameManager.Instance.pendingMorningReport))
         {
@@ -52,6 +70,7 @@ public class DayManager : MonoBehaviour
     
     void Update()
     {
+        // Credit popup logic
         if (GameManager.Instance.credits != lastCreditsValue)
         {
             int diff = GameManager.Instance.credits - lastCreditsValue;
@@ -59,6 +78,7 @@ public class DayManager : MonoBehaviour
             lastCreditsValue = GameManager.Instance.credits;
         }
 
+        // Smooth credit display tween
         if (creditsText != null)
         {
             int actualCredits = GameManager.Instance.credits;
@@ -70,6 +90,7 @@ public class DayManager : MonoBehaviour
             }
         }
 
+        // Debug Morning Test
         if (Application.isEditor && Input.GetKeyDown(KeyCode.M))
         {
             Debug.Log("Debug: Simulating Morning...");
@@ -79,6 +100,18 @@ public class DayManager : MonoBehaviour
         }
     }
 
+    // --- Button Text Coloring ---
+    void SetButtonTextState(Button btn, TextMeshProUGUI txt, bool enabled)
+    {
+        if (txt == null) return;
+
+        if (enabled)
+            txt.color = Color.white;
+        else
+            txt.color = new Color(1f, 1f, 1f, 0.35f); // dimmed
+    }
+
+    // --- Morning Report ---
     public void ShowMorningReport(string message)
     {
         if (reportPanel != null)
@@ -86,10 +119,8 @@ public class DayManager : MonoBehaviour
             reportPanel.SetActive(true);
             reportText.text = message;
             
-            // --- ANIMATION START ---
             reportPanel.transform.localScale = Vector3.zero;
             reportPanel.transform.DOScale(1f, 0.3f).SetEase(Ease.OutBack);
-            // -----------------------
             
             GameManager.Instance.pendingMorningReport = ""; 
         }
@@ -97,7 +128,6 @@ public class DayManager : MonoBehaviour
 
     public void CloseReport()
     {
-        // --- ANIMATION END ---
         if (reportPanel != null)
         {
             reportPanel.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() => 
@@ -107,39 +137,61 @@ public class DayManager : MonoBehaviour
         }
     }
 
-    // ... (Keep AdvanceTime, UpdateTimeUI, EndOfDayReached, GoToPreparationPhase, SpawnMoneyPopup SAME as before) ...
+    // --- Time Progression ---
     public void AdvanceTime(int cost = 1)
     {
         if (currentTimeSlot >= maxTimeSlots) return;
+
         currentTimeSlot += cost;
-        if (salesManager != null) salesManager.ProcessPassiveSales();
+
+        if (salesManager != null)
+            salesManager.ProcessPassiveSales();
+
+        // --- NEW: When reaching max → disable Next Event only
         if (currentTimeSlot >= maxTimeSlots)
         {
             currentTimeSlot = maxTimeSlots;
             EndOfDayReached();
         }
+
         UpdateTimeUI(); 
     }
 
     void UpdateTimeUI()
     {
         if (timeText == null) return;
-        if (currentTimeSlot < timeLabels.Length) timeText.text = timeLabels[currentTimeSlot];
-        else timeText.text = "Night Fall";
+
+        if (currentTimeSlot < timeLabels.Length)
+            timeText.text = timeLabels[currentTimeSlot];
+        else
+            timeText.text = "Night Fall";
     }
 
     void EndOfDayReached()
     {
         Debug.Log("The sun has set. Prepare for night.");
-        if(endDayButton != null) endDayButton.interactable = true;
-        if(nextEventButton != null) nextEventButton.interactable = false;
+
+        // --- NEW: End Day stays enabled
+        if (endDayButton != null)
+        {
+            endDayButton.interactable = true;
+            SetButtonTextState(endDayButton, endDayButtonText, true);
+        }
+
+        // --- NEW: Next Event disabled only at night
+        if (nextEventButton != null)
+        {
+            nextEventButton.interactable = false;
+            SetButtonTextState(nextEventButton, nextEventButtonText, false);
+        }
     }
 
     public void GoToPreparationPhase()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Nighttime"); 
+        SceneManager.LoadScene("Nighttime"); 
     }
     
+    // --- Money Popup ---
     void SpawnMoneyPopup(int amount)
     {
         if (moneyPopupPrefab != null && popupSpawnPoint != null)
