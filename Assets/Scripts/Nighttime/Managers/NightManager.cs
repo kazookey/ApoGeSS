@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using DG.Tweening; // Added for Animations
 
 public enum NightState
 {
@@ -30,7 +31,7 @@ public class NightManager : MonoBehaviour
     public TextMeshProUGUI resultText;
     public TextMeshProUGUI endButtonText;
     
-    [Header("Defender Spawning")]
+    [Header("Defender Spawning (Rein's Logic)")]
     public GameObject defenderPrefab;       
     public Transform[] defenderSpawnPoints; 
 
@@ -50,7 +51,6 @@ public class NightManager : MonoBehaviour
         if (timerContainer != null) timerContainer.SetActive(false);
         if (endNightPanel != null) endNightPanel.SetActive(false);
 
-        // Find Scene References
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null) playerMovement = playerObject.GetComponent<PlayerMovement>();
         
@@ -62,11 +62,8 @@ public class NightManager : MonoBehaviour
     
     void Start()
     {
-        // 1. SPAWN DEFENDERS
         SpawnDefenders();
 
-        // 2. Load Barricade HP
-        // FIX: Now uses 'currentHealth' (float) to match Barricade.cs
         if (mainBarricade != null)
         {
             if (GameManager.Instance != null)
@@ -76,6 +73,19 @@ public class NightManager : MonoBehaviour
                 
             mainBarricade.maxHealth = 100f; 
         }
+
+        // --- ANIMATION: Intro ---
+        // Make the Start button and Trap UI pop in
+        if (startNightButton != null)
+        {
+            startNightButton.transform.localScale = Vector3.zero;
+            startNightButton.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBack);
+        }
+        if (trapUI != null)
+        {
+            trapUI.transform.localScale = Vector3.zero;
+            trapUI.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBack).SetDelay(0.1f);
+        }
     }
 
     void SpawnDefenders()
@@ -83,7 +93,6 @@ public class NightManager : MonoBehaviour
         if (GameManager.Instance == null) return;
 
         int count = GameManager.Instance.assignedDefenders;
-        
         if (defenderSpawnPoints == null || defenderSpawnPoints.Length == 0) return;
 
         int limit = Mathf.Min(count, defenderSpawnPoints.Length);
@@ -112,10 +121,21 @@ public class NightManager : MonoBehaviour
         if (WaveManager.Instance != null) WaveManager.Instance.BeginWaves();
 
         timerCoroutine = StartCoroutine(NightTimer());
-        if (timerContainer != null) timerContainer.SetActive(true);
+        
+        // --- ANIMATION: Show Timer ---
+        if (timerContainer != null) 
+        {
+            timerContainer.SetActive(true);
+            timerContainer.transform.localScale = Vector3.zero;
+            timerContainer.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBack);
+        }
 
-        if (startNightButton != null) startNightButton.SetActive(false);
-        if (trapUI != null) trapUI.SetActive(false);
+        // --- ANIMATION: Hide Prep UI ---
+        if (startNightButton != null) 
+            startNightButton.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() => startNightButton.SetActive(false));
+            
+        if (trapUI != null) 
+            trapUI.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() => trapUI.SetActive(false));
     }
 
     IEnumerator NightTimer()
@@ -133,7 +153,6 @@ public class NightManager : MonoBehaviour
         {
             timeLeft = 0; 
             UpdateTimerUI(timeLeft);
-            // FIX: Uses float 'currentHealth'
             EndNightSequence(true, mainBarricade != null ? mainBarricade.currentHealth : 0f); 
         }
     }
@@ -147,7 +166,6 @@ public class NightManager : MonoBehaviour
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-    // FIX: Changed finalBarricadeHP to float
     public void EndNightSequence(bool victory, float finalBarricadeHP)
     {
         if (currentState == NightState.GameOver || currentState == NightState.Victory) return;
@@ -155,7 +173,7 @@ public class NightManager : MonoBehaviour
         if (timerCoroutine != null) StopCoroutine(timerCoroutine);
         if (WaveManager.Instance != null) WaveManager.Instance.StopSpawning();
 
-        Time.timeScale = 0f;
+        Time.timeScale = 0f; // PAUSE GAME
         
         if (playerMovement != null) playerMovement.enabled = false;
         Cursor.visible = true;
@@ -169,10 +187,9 @@ public class NightManager : MonoBehaviour
             if(resultText != null) resultText.text = "YOU SURVIVED!";
             if(endButtonText != null) endButtonText.text = "NEXT DAY";
             
-            // --- SYNC WITH GAMEMANAGER ---
             if (GameManager.Instance != null)
             {
-                GameManager.Instance.barricadeHealth = finalBarricadeHP; // Save Float HP
+                GameManager.Instance.barricadeHealth = finalBarricadeHP;
                 GameManager.Instance.ProcessMorningResults(); 
                 GameManager.Instance.AdvanceDay(); 
             }
@@ -192,21 +209,50 @@ public class NightManager : MonoBehaviour
             if (GameManager.Instance != null) GameManager.Instance.barricadeHealth = 0;
         }
         
-        if (timerContainer != null) timerContainer.SetActive(false);
-        if (endNightPanel != null) endNightPanel.SetActive(true);
+        // --- ANIMATION: Hide Timer ---
+        if (timerContainer != null)
+        {
+             // Use SetUpdate(true) because TimeScale is 0!
+             timerContainer.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).SetUpdate(true).OnComplete(() => 
+             {
+                 timerContainer.SetActive(false);
+             });
+        }
+        
+        // --- ANIMATION: Show Results ---
+        if (endNightPanel != null) 
+        {
+            endNightPanel.SetActive(true);
+            endNightPanel.transform.localScale = Vector3.zero;
+            // CRITICAL: .SetUpdate(true) makes it animate even when paused
+            endNightPanel.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBack).SetUpdate(true);
+        }
     }
     
     public void OnEndNightButton()
     {
-        Time.timeScale = 1f;
+        Time.timeScale = 1f; // Unpause before leaving!
         
-        if (currentState == NightState.Victory)
+        // --- ANIMATION: Close Panel ---
+        if (endNightPanel != null)
         {
-            SceneManager.LoadScene("Daytime"); 
+            endNightPanel.transform.DOScale(0f, 0.2f).SetEase(Ease.InBack).OnComplete(() => 
+            {
+                if (currentState == NightState.Victory)
+                {
+                    SceneManager.LoadScene("Daytime"); 
+                }
+                else if (currentState == NightState.GameOver)
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
+                }
+            });
         }
-        else if (currentState == NightState.GameOver)
+        else
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
+            // Fallback if panel is missing
+            if (currentState == NightState.Victory) SceneManager.LoadScene("Daytime"); 
+            else SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
         }
     }
 

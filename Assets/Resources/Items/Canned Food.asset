@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Canned Food
   icon: {fileID: -273060469431498887, guid: 01ee294c242185b488366d62acf6642d, type: 3}
   description: 
-  baseValue: 50
+  baseValue: 30
   isAmmo: 0
   isBarricadeRepair: 0
   effectAmount: 0

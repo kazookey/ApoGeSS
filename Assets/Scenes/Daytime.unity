@@ -4635,12 +4635,12 @@ MonoBehaviour:
   buyAmmoButton: {fileID: 189658793}
   hireDefenderButton: {fileID: 1108681003}
   closeButton: {fileID: 1284583657}
-  repairCost: 50
+  repairCost: 100
   repairAmount: 25
   ammoItem: {fileID: 11400000, guid: d730112b226001447a6052e7175b4710, type: 2}
-  ammoCost: 30
-  ammoPackSize: 10
-  hireCost: 100
+  ammoCost: 150
+  ammoPackSize: 5
+  hireCost: 150
 --- !u!114 &954706472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6076,10 +6076,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1140016939}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 2090977332}
+        m_TargetAssemblyTypeName: InventoryUI, Assembly-CSharp
+        m_MethodName: CloseInventory
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8429,7 +8429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentDay: 1
-  credits: 150
+  credits: 100
   reputation: 50
   barricadeHealth: 100
   totalSurvivors: 0
@@ -8441,9 +8441,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 435f37f30de61f24595da294e15a37eb, type: 2}
   - {fileID: 11400000, guid: d730112b226001447a6052e7175b4710, type: 2}
   - {fileID: 11400000, guid: 3217493a9764e554b9b87e35fa0a4e35, type: 2}
-  scoutDeathChance: 0.15
+  scoutDeathChance: 1
   pendingMorningReport: 
-  testItem: {fileID: 11400000, guid: bfdefa56776bcf54783088ff6bbcf2fe, type: 2}
+  testItem: {fileID: 11400000, guid: 3217493a9764e554b9b87e35fa0a4e35, type: 2}
 --- !u!4 &1763735682
 Transform:
   m_ObjectHideFlags: 0
@@ -9623,17 +9623,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1140016939}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 2090977332}
+        m_TargetAssemblyTypeName: InventoryUI, Assembly-CSharp
+        m_MethodName: OpenInventory
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1993814794
 MonoBehaviour:
@@ -10590,6 +10590,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemsContainer: {fileID: 2090977328}
   slotPrefab: {fileID: 4131232679560793636, guid: 35a2820e2aeb9a540a65d56756172313, type: 3}
+  inventoryWindow: {fileID: 1140016939}
 --- !u!1 &2110706857
 GameObject:
   m_ObjectHideFlags: 0

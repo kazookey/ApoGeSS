@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Rare Weapon
   icon: {fileID: -4532114073746202998, guid: 01ee294c242185b488366d62acf6642d, type: 3}
   description: 
-  baseValue: 200
+  baseValue: 250
   isAmmo: 0
   isBarricadeRepair: 0
   effectAmount: 0

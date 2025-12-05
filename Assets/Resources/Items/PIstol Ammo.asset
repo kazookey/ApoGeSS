@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: PIstol Ammo
   icon: {fileID: 9094600903545770030, guid: 01ee294c242185b488366d62acf6642d, type: 3}
   description: 
-  baseValue: 150
+  baseValue: 200
   isAmmo: 0
   isBarricadeRepair: 0
   effectAmount: 0
