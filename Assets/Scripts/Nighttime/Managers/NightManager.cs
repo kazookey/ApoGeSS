@@ -39,6 +39,7 @@ public class NightManager : MonoBehaviour
     public float nightdurationSeconds = 300f; 
     public NightState currentState = NightState.Preparation;
     private Coroutine timerCoroutine;
+    private Coroutine prepPhaseCoroutine;
 
     private List<HiredDefender> activeDefenders = new List<HiredDefender>();
     
@@ -75,7 +76,6 @@ public class NightManager : MonoBehaviour
         }
 
         // --- ANIMATION: Intro ---
-        // Make the Start button and Trap UI pop in
         if (startNightButton != null)
         {
             startNightButton.transform.localScale = Vector3.zero;
@@ -85,6 +85,14 @@ public class NightManager : MonoBehaviour
         {
             trapUI.transform.localScale = Vector3.zero;
             trapUI.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack).SetDelay(0.1f);
+        }
+
+        // --- Preparation Phase Timer UI ---
+        if (timerContainer != null)
+        {
+            timerContainer.SetActive(true);
+            timerText.text = "PREPARE";
+            prepPhaseCoroutine = StartCoroutine(PreparationPhaseTextLoop());
         }
     }
 
@@ -117,18 +125,16 @@ public class NightManager : MonoBehaviour
         if (currentState != NightState.Preparation) return;
 
         currentState = NightState.Wave;
-        
+
+        // Stop preparation text loop
+        if (prepPhaseCoroutine != null) StopCoroutine(prepPhaseCoroutine);
+
         if (WaveManager.Instance != null) WaveManager.Instance.BeginWaves();
 
         timerCoroutine = StartCoroutine(NightTimer());
         
-        // --- ANIMATION: Show Timer ---
-        if (timerContainer != null) 
-        {
-            timerContainer.SetActive(true);
-            timerContainer.transform.localScale = Vector3.zero;
-            timerContainer.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBack);
-        }
+        // --- Update timer to start countdown immediately ---
+        UpdateTimerUI(nightdurationSeconds);
 
         // --- ANIMATION: Hide Prep UI ---
         if (startNightButton != null) 
@@ -136,6 +142,19 @@ public class NightManager : MonoBehaviour
             
         if (trapUI != null) 
             trapUI.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() => trapUI.SetActive(false));
+    }
+
+    IEnumerator PreparationPhaseTextLoop()
+    {
+        bool showPrepare = true;
+
+        while (currentState == NightState.Preparation)
+        {
+            timerText.text = showPrepare ? "PREPARATION" : "PHASE";
+            showPrepare = !showPrepare;
+
+            yield return new WaitForSeconds(1.5f); // adjust speed as needed
+        }
     }
 
     IEnumerator NightTimer()
@@ -212,7 +231,6 @@ public class NightManager : MonoBehaviour
         // --- ANIMATION: Hide Timer ---
         if (timerContainer != null)
         {
-             // Use SetUpdate(true) because TimeScale is 0!
              timerContainer.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).SetUpdate(true).OnComplete(() => 
              {
                  timerContainer.SetActive(false);
@@ -224,7 +242,6 @@ public class NightManager : MonoBehaviour
         {
             endNightPanel.SetActive(true);
             endNightPanel.transform.localScale = Vector3.zero;
-            // CRITICAL: .SetUpdate(true) makes it animate even when paused
             endNightPanel.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBack).SetUpdate(true);
         }
     }
@@ -238,21 +255,12 @@ public class NightManager : MonoBehaviour
         {
             endNightPanel.transform.DOScale(0f, 0.2f).SetEase(Ease.InBack).OnComplete(() => 
             {
-                if (currentState == NightState.Victory)
-                {
-                    SceneTransitionManager.Instance.LoadNightScene();
-                }
-                else if (currentState == NightState.GameOver)
-                {
-                    SceneTransitionManager.Instance.LoadNightScene();
-                }
+                SceneTransitionManager.Instance.LoadNightScene();
             });
         }
         else
         {
-            // Fallback if panel is missing
-            if (currentState == NightState.Victory) SceneTransitionManager.Instance.LoadNightScene();
-            else SceneTransitionManager.Instance.LoadNightScene();
+            SceneTransitionManager.Instance.LoadNightScene();
         }
     }
 
