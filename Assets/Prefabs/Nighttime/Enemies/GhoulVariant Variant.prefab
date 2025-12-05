@@ -64,6 +64,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 7384356137553014411, guid: 18412f3b457ecbf4297e07a4d4887ebc, type: 3}
+      propertyPath: maxHP
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7384356137553014411, guid: 18412f3b457ecbf4297e07a4d4887ebc, type: 3}
+      propertyPath: moveSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7623857270664406018, guid: 18412f3b457ecbf4297e07a4d4887ebc, type: 3}
       propertyPath: m_Controller
       value: 
