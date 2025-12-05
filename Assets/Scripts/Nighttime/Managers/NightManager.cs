@@ -249,18 +249,33 @@ public class NightManager : MonoBehaviour
     public void OnEndNightButton()
     {
         Time.timeScale = 1f; // Unpause before leaving!
-        
-        // --- ANIMATION: Close Panel ---
+
         if (endNightPanel != null)
         {
-            endNightPanel.transform.DOScale(0f, 0.2f).SetEase(Ease.InBack).OnComplete(() => 
+            endNightPanel.transform.DOScale(0f, 0.2f).SetEase(Ease.InBack).OnComplete(() =>
             {
-                SceneTransitionManager.Instance.LoadNightScene();
+                if (currentState == NightState.Victory)
+                {
+                    // Go to morning/day scene
+                    SceneTransitionManager.Instance.LoadDayScene();
+                }
+                else if (currentState == NightState.GameOver)
+                {
+                    // Retry the night
+                    SceneTransitionManager.Instance.LoadNightScene();
+                }
             });
         }
         else
         {
-            SceneTransitionManager.Instance.LoadNightScene();
+            if (currentState == NightState.Victory)
+            {
+                SceneTransitionManager.Instance.LoadDayScene();
+            }
+            else if (currentState == NightState.GameOver)
+            {
+                SceneTransitionManager.Instance.LoadNightScene();
+            }
         }
     }
 
