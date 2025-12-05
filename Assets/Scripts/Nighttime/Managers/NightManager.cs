@@ -84,7 +84,7 @@ public class NightManager : MonoBehaviour
         if (trapUI != null)
         {
             trapUI.transform.localScale = Vector3.zero;
-            trapUI.transform.DOScale(new Vector3(0.24f, 0.16f, 0.20f), 0.5f).SetEase(Ease.OutBack).SetDelay(0.1f);
+            trapUI.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack).SetDelay(0.1f);
         }
     }
 
