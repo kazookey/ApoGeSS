@@ -186,7 +186,7 @@ MonoBehaviour:
   bulletSpeed: 12
   ammoItem: {fileID: 0}
   useAmmo: 0
-  fireCooldown: 0.25
+  fireCooldown: 0.35
   inputBufferTime: 0.15
 --- !u!114 &4552640214604196237
 MonoBehaviour:
@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bafbb2d6cdc3f9347a08827b98595a14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3.5
+  moveSpeed: 3.25
   moveInput: {x: 0, y: 0}
 --- !u!114 &3742103142821524174
 MonoBehaviour:
