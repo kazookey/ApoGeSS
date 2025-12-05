@@ -240,19 +240,19 @@ public class NightManager : MonoBehaviour
             {
                 if (currentState == NightState.Victory)
                 {
-                    SceneManager.LoadScene("Daytime"); 
+                    SceneTransitionManager.Instance.LoadNightScene();
                 }
                 else if (currentState == NightState.GameOver)
                 {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
+                    SceneTransitionManager.Instance.LoadNightScene();
                 }
             });
         }
         else
         {
             // Fallback if panel is missing
-            if (currentState == NightState.Victory) SceneManager.LoadScene("Daytime"); 
-            else SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
+            if (currentState == NightState.Victory) SceneTransitionManager.Instance.LoadNightScene();
+            else SceneTransitionManager.Instance.LoadNightScene();
         }
     }
 

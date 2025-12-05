@@ -188,7 +188,7 @@ public class DayManager : MonoBehaviour
 
     public void GoToPreparationPhase()
     {
-        SceneManager.LoadScene("Nighttime"); 
+        SceneTransitionManager.Instance.LoadNightScene();
     }
     
     // --- Money Popup ---
