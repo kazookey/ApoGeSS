@@ -109,7 +109,7 @@ public class SalesManager : MonoBehaviour
         if (summaryPanel != null)
         {
             summaryPanel.SetActive(true);
-            summaryText.text = $"<b>Passive Sales Report</b>\n\n" +
+            summaryText.text = $"<b>Passive Sales Report</b>\n" +
                                $"Items Sold: {itemsSoldInPhase}\n" +
                                $"Revenue: <color=green>${revenueInPhase}</color>";
         }

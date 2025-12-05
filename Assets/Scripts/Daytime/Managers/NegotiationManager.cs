@@ -16,14 +16,20 @@ public class NegotiationManager : MonoBehaviour
     public TextMeshProUGUI marketValueText; 
     public Slider offerSlider;
     public TextMeshProUGUI offerValueText; 
-    public TextMeshProUGUI resultText;
-    
+    public TextMeshProUGUI resultText; // Top text
+
+    // --- NEW ITEM UI ---
+    public TextMeshProUGUI itemNameText;
+    public TextMeshProUGUI itemDescriptionText;
+    public Image itemIcon;
+
     public Button confirmButton;
     public Button declineButton;
 
     private ItemData currentItem;
     private int basePrice;
     private int askingPrice; 
+    private string initialResultText;
 
     void Start()
     {
@@ -50,27 +56,27 @@ public class NegotiationManager : MonoBehaviour
         
         confirmButton.interactable = true;
         declineButton.interactable = true;
-        resultText.text = "";
 
-        promptText.text = $"A Scavenger wants to sell <b>{item.itemName}</b>.";
-        marketValueText.text = $"Market Value: ${basePrice}\nAsking Price: ${askingPrice}";
-
+        // --- Text setup ---
+        initialResultText = $"They are looking to sell it for ${askingPrice}";
+        resultText.text = initialResultText;
+        marketValueText.text = $"Market Value: ${basePrice}";
         offerSlider.minValue = 1;
-        offerSlider.maxValue = askingPrice * 1.5f;
+        offerSlider.maxValue = Mathf.RoundToInt(askingPrice * 1.5f);
         offerSlider.value = askingPrice; 
-
         UpdateSliderText(offerSlider.value);
 
-        // --- ANIMATION UPDATE ---
+        // --- ITEM DISPLAY ---
+        if (itemNameText != null) itemNameText.text = item.itemName;
+        if (itemDescriptionText != null) itemDescriptionText.text = item.description;
+        if (itemIcon != null) itemIcon.sprite = item.icon;
+
+        // --- Animation ---
         if (negotiationCanvasGroup != null)
         {
             negotiationCanvasGroup.alpha = 0; 
             negotiationCanvasGroup.blocksRaycasts = true;
-            
-            // Combine Fade AND Scale
             negotiationCanvasGroup.DOFade(1f, 0.3f);
-            panel.transform.localScale = Vector3.zero;
-            panel.transform.DOScale(1f, 0.3f).SetEase(Ease.OutBack);
         }
     }
 
@@ -95,22 +101,22 @@ public class NegotiationManager : MonoBehaviour
         {
             GameManager.Instance.ModifyCredits(-offerAmount);
             GameManager.Instance.AddItem(currentItem, 1);
-            
-            resultText.text = "<color=green>Deal Accepted!</color>";
+            resultText.text = $"<color=green>Deal Accepted for ${offerAmount}!</color>";
             EndInteraction();
         }
         else
         {
-            resultText.text = "<color=red>Refused!</color>";
+            resultText.text = $"<color=red>Refused at ${offerAmount}!</color>";
             EndInteraction();
         }
     }
 
     public void DeclineTrade()
     {
-        resultText.text = "You rejected the offer.";
+        resultText.text = $"<color=red>You rejected the offer of ${askingPrice}.</color>";
         EndInteraction();
     }
+
 
     private void EndInteraction()
     {
@@ -125,10 +131,7 @@ public class NegotiationManager : MonoBehaviour
         if (negotiationCanvasGroup != null)
         {
             negotiationCanvasGroup.blocksRaycasts = false;
-            
-            // Scale down AND Fade out
-            negotiationCanvasGroup.DOFade(0f, 0.3f);
-            panel.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() => 
+            negotiationCanvasGroup.DOFade(0f, 0.3f).OnComplete(() =>
             {
                 panel.SetActive(false);
                 if(dayManager != null) dayManager.AdvanceTime(1);

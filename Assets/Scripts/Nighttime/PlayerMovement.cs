@@ -5,7 +5,7 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 5f;
 
     Rigidbody2D rb;
-    Vector2 moveInput;
+    public Vector2 moveInput;
 
     void Start()
     {

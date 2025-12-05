@@ -8,40 +8,45 @@ public class WorkstationManager : MonoBehaviour
     [Header("UI References")]
     public GameObject workstationPanel;
     public TextMeshProUGUI barricadeStatusText;
-    // Note: We removed the local creditsText because DayManager handles it now!
 
     [Header("Buttons")]
+    public Button toggleButton; // Replaces closeButton
     public Button repairButton;
     public Button buyAmmoButton;
-    public Button hireDefenderButton; // The button to recruit a survivor
-    public Button closeButton;
+    public Button hireDefenderButton; 
 
     [Header("Costs & Values")]
     public int repairCost = 50;
     public float repairAmount = 25f;
-    
+
     public ItemData ammoItem; 
     public int ammoCost = 30;
     public int ammoPackSize = 10;
 
-    // --- THIS WAS MISSING ---
-    public int hireCost = 100; 
-    // ------------------------
+    public int hireCost = 100;
 
     void Start()
     {
-        if(workstationPanel != null) workstationPanel.SetActive(false);
+        if (workstationPanel != null) workstationPanel.SetActive(false);
 
-        if(repairButton != null) repairButton.onClick.AddListener(BuyRepair);
-        if(buyAmmoButton != null) buyAmmoButton.onClick.AddListener(BuyAmmo);
-        if(hireDefenderButton != null) hireDefenderButton.onClick.AddListener(BuyDefender); // Link the new button
-        if(closeButton != null) closeButton.onClick.AddListener(CloseWorkstation);
+        if (toggleButton != null) toggleButton.onClick.AddListener(ToggleWorkstation);
+        if (repairButton != null) repairButton.onClick.AddListener(BuyRepair);
+        if (buyAmmoButton != null) buyAmmoButton.onClick.AddListener(BuyAmmo);
+        if (hireDefenderButton != null) hireDefenderButton.onClick.AddListener(BuyDefender);
     }
 
-    public void OpenWorkstation()
+    public void ToggleWorkstation()
+    {
+        if (workstationPanel.activeSelf)
+            CloseWorkstation();
+        else
+            OpenWorkstation();
+    }
+
+    void OpenWorkstation()
     {
         workstationPanel.SetActive(true);
-        
+
         // DOTween Bounce Effect
         workstationPanel.transform.localScale = Vector3.zero; 
         workstationPanel.transform.DOScale(1f, 0.3f).SetEase(Ease.OutBack);
@@ -51,7 +56,6 @@ public class WorkstationManager : MonoBehaviour
 
     public void CloseWorkstation()
     {
-        // DOTween Close Effect
         workstationPanel.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() => 
         {
             workstationPanel.SetActive(false);
@@ -60,35 +64,35 @@ public class WorkstationManager : MonoBehaviour
 
     void UpdateUI()
     {
-        // 1. Update Barricade Text
+        // Update Barricade Text
         if (barricadeStatusText != null)
         {
             float hp = GameManager.Instance.barricadeHealth;
             barricadeStatusText.text = $"Barricade Integrity: {hp}%";
         }
 
-        // 2. Update Repair Button
-        if (repairButton != null) 
+        // Repair Button
+        if (repairButton != null)
         {
             bool canAfford = GameManager.Instance.credits >= repairCost;
             bool needsRepair = GameManager.Instance.barricadeHealth < 100f;
             repairButton.interactable = canAfford && needsRepair;
             
             TextMeshProUGUI btnText = repairButton.GetComponentInChildren<TextMeshProUGUI>();
-            if(btnText != null) btnText.text = $"Repair Wall (-${repairCost})";
+            if(btnText != null) btnText.text = $"Repair Wall \n(-${repairCost})";
         }
 
-        // 3. Update Ammo Button
+        // Ammo Button
         if (buyAmmoButton != null)
         {
             bool canAfford = GameManager.Instance.credits >= ammoCost;
             buyAmmoButton.interactable = canAfford;
             
             TextMeshProUGUI btnText = buyAmmoButton.GetComponentInChildren<TextMeshProUGUI>();
-            if(btnText != null) btnText.text = $"Buy Ammo x{ammoPackSize} (-${ammoCost})";
+            if(btnText != null) btnText.text = $"Buy Ammo x{ammoPackSize} \n(-${ammoCost})";
         }
 
-        // 4. Update Hire Button (New Staff Logic)
+        // Hire Button
         if (hireDefenderButton != null)
         {
             bool canAfford = GameManager.Instance.credits >= hireCost;
@@ -99,8 +103,7 @@ public class WorkstationManager : MonoBehaviour
             TextMeshProUGUI btnText = hireDefenderButton.GetComponentInChildren<TextMeshProUGUI>();
             if(btnText != null) 
             {
-                if (!notFull) btnText.text = "Max Staff Reached";
-                else btnText.text = $"Recruit Survivor (-${hireCost})";
+                btnText.text = notFull ? $"Recruit Survivor \n(-${hireCost})" : "Max Staff Reached";
             }
         }
     }
@@ -134,10 +137,8 @@ public class WorkstationManager : MonoBehaviour
         }
     }
 
-    // This adds a generic survivor to the pool
     public void BuyDefender()
     {
-        // Double Check Limit
         if (GameManager.Instance.totalSurvivors >= GameManager.Instance.maxSurvivors)
         {
             Debug.Log("Max Survivors Reached!");

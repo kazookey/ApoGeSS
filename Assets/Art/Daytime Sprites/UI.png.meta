@@ -302,10 +302,10 @@ TextureImporter:
       name: UI_7
       rect:
         serializedVersion: 2
-        x: 0
-        y: 27
-        width: 14
-        height: 14
+        x: 1
+        y: 28
+        width: 12
+        height: 12
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -324,10 +324,10 @@ TextureImporter:
       name: UI_8
       rect:
         serializedVersion: 2
-        x: 16
-        y: 26
-        width: 14
-        height: 14
+        x: 17
+        y: 27
+        width: 12
+        height: 12
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -346,10 +346,10 @@ TextureImporter:
       name: UI_9
       rect:
         serializedVersion: 2
-        x: 33
-        y: 27
-        width: 12
-        height: 12
+        x: 34
+        y: 28
+        width: 10
+        height: 10
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -368,10 +368,10 @@ TextureImporter:
       name: UI_11
       rect:
         serializedVersion: 2
-        x: 49
-        y: 28
-        width: 13
-        height: 12
+        x: 50
+        y: 29
+        width: 11
+        height: 10
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -390,10 +390,10 @@ TextureImporter:
       name: UI_12
       rect:
         serializedVersion: 2
-        x: 64
-        y: 27
-        width: 30
-        height: 12
+        x: 65
+        y: 28
+        width: 28
+        height: 10
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -412,10 +412,10 @@ TextureImporter:
       name: UI_13
       rect:
         serializedVersion: 2
-        x: 112
+        x: 113
         y: 0
-        width: 32
-        height: 46
+        width: 30
+        height: 45
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -434,10 +434,10 @@ TextureImporter:
       name: UI_14
       rect:
         serializedVersion: 2
-        x: 148
+        x: 149
         y: 0
-        width: 24
-        height: 41
+        width: 22
+        height: 40
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

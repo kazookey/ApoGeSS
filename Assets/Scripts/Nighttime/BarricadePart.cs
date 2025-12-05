@@ -10,6 +10,9 @@ public class BarricadePart : MonoBehaviour
             return;
 
         if (root.CanTakeDamage())
+        {
             root.TakeDamage(1);
+            print(col.transform.name + " hit");
+        }
     }
 }

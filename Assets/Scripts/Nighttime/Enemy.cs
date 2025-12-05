@@ -34,7 +34,8 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Move()
     {
-        Vector2 dir = (player.position - transform.position).normalized;
+        // Move straight to the right, ignoring the player
+        Vector2 dir = Vector2.right;
         transform.Translate(dir * moveSpeed * Time.deltaTime);
     }
 

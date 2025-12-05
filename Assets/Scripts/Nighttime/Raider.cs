@@ -8,30 +8,27 @@ public class Raider : Enemy
     private float cooldownTimer = 0;
     public GameObject molotovPrefab; 
     
-    
     private Transform barricadeTarget;
-   
     
     void Start()
     {
         base.Start();
-        barricadeTarget = GameObject.FindGameObjectWithTag("Barricade").transform;
-       
+        barricadeTarget = GameObject.FindGameObjectWithTag("Barricade")?.transform;
     }
 
     protected override void Move()
     {
-      
+        // If no barricade is found, move right (fallback)
         if (barricadeTarget == null)
         {
-            base.Move();
+            transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
             return;
         }
-        
-       
-        float distance = Vector2.Distance(transform.position, barricadeTarget.position);
-        
 
+        // Distance check for throwing range
+        float distance = Vector2.Distance(transform.position, barricadeTarget.position);
+
+        // Inside throw range → stop moving & throw on cooldown
         if (distance <= throwRange)
         {
             cooldownTimer -= Time.deltaTime;
@@ -43,17 +40,12 @@ public class Raider : Enemy
             return;
         }
 
-        
-        base.Move();
-
-        Vector2 dir = (barricadeTarget.position - transform.position).normalized;
-        transform.Translate(dir * moveSpeed * Time.deltaTime);
+        // OUTSIDE throw range → move straight right only (no homing)
+        transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
     }
 
     void ThrowMolotov()
     {
-       
         Instantiate(molotovPrefab, transform.position, Quaternion.identity);
-        
     }
 }

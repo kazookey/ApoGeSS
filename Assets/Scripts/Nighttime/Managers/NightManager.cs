@@ -84,7 +84,7 @@ public class NightManager : MonoBehaviour
         if (trapUI != null)
         {
             trapUI.transform.localScale = Vector3.zero;
-            trapUI.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBack).SetDelay(0.1f);
+            trapUI.transform.DOScale(new Vector3(0.24f, 0.16f, 0.20f), 0.5f).SetEase(Ease.OutBack).SetDelay(0.1f);
         }
     }
 
@@ -240,19 +240,19 @@ public class NightManager : MonoBehaviour
             {
                 if (currentState == NightState.Victory)
                 {
-                    SceneManager.LoadScene("Daytime"); 
+                    SceneTransitionManager.Instance.LoadNightScene();
                 }
                 else if (currentState == NightState.GameOver)
                 {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
+                    SceneTransitionManager.Instance.LoadNightScene();
                 }
             });
         }
         else
         {
             // Fallback if panel is missing
-            if (currentState == NightState.Victory) SceneManager.LoadScene("Daytime"); 
-            else SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
+            if (currentState == NightState.Victory) SceneTransitionManager.Instance.LoadNightScene();
+            else SceneTransitionManager.Instance.LoadNightScene();
         }
     }
 
