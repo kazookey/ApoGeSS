@@ -10,10 +10,10 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Particles
   - Water
   - UI
-  - 
+  - Enemy
   - 
   - 
   - 
@@ -63,6 +63,9 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 2763674861
+    locked: 0
+  - name: Defender
+    uniqueID: 2275053265
     locked: 0
   m_RenderingLayers:
   - Default

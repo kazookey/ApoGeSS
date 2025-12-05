@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a7c33198ae2b874ba95450efa4c9b55, type: 3}
+  m_Name: Greedy Raider
+  m_EditorClassIdentifier: 
+  traderName: Greedy Raider
+  portrait: {fileID: -8346291274449466048, guid: 01ee294c242185b488366d62acf6642d, type: 3}
+  introLines:
+  - Top quality stuff. Not cheap.
+  - Pay up or shut up.
+  possibleItems:
+  - {fileID: 11400000, guid: d730112b226001447a6052e7175b4710, type: 2}
+  - {fileID: 11400000, guid: 435f37f30de61f24595da294e15a37eb, type: 2}
+  priceMultiplier: 1.5

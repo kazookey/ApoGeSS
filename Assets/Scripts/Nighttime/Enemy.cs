@@ -2,44 +2,53 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public float moveSpeed = 2f;
-    public int health = 2;
-    public int damagePerSecond = 1;
+    public int maxHP = 3;
+    public float moveSpeed = 1.5f;
+    public bool isStunned = false;
 
-    Transform barricade;
 
-    void Start()
+    protected int currentHP;
+    protected Transform player;
+
+    protected void Start()
     {
-        barricade = GameObject.FindWithTag("Barricade").transform;
+        currentHP = maxHP;
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+        {
+            player = playerObject.transform;
+        }
+        else
+        {
+            Debug.LogError("Player object with tag 'Player' not found in the scene.");
+        }
     }
 
     void Update()
     {
-        transform.position = Vector2.MoveTowards(
-            transform.position,
-            barricade.position,
-            moveSpeed * Time.deltaTime
-        );
-    }
-
-    void OnCollisionStay2D(Collision2D col)
-    {
-        if (col.gameObject.CompareTag("Barricade"))
+        if (!isStunned && player != null)
         {
-            col.gameObject.GetComponent<Barricade>().TakeDamage(damagePerSecond * Time.deltaTime);
+            Move();
         }
     }
 
-    public void TakeDamage(int dmg)
+    protected virtual void Move()
     {
-        health -= dmg;
-        if (health <= 0)
+        // Move straight to the right, ignoring the player
+        Vector2 dir = Vector2.right;
+        transform.Translate(dir * moveSpeed * Time.deltaTime);
+    }
+
+    public virtual void TakeDamage(int dmg)
+    {
+        currentHP -= dmg;
+        if (currentHP <= 0)
             Die();
     }
 
-    void Die()
+    protected virtual void Die()
     {
-        Destroy(gameObject);
         WaveManager.EnemyKilled();
+        Destroy(gameObject);
     }
 }
