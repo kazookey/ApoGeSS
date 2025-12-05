@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 2566993656339912235}
   - component: {fileID: 3366568352681389335}
   - component: {fileID: 2616637670689793418}
+  - component: {fileID: 1887945342923070983}
   m_Layer: 0
   m_Name: HiredDefender
   m_TagString: Untagged
@@ -243,3 +244,25 @@ SortingGroup:
   m_SortingLayer: 8
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!95 &1887945342923070983
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9000079649984136540}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 553c99e897e7b634d8e279035ddf0fcb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

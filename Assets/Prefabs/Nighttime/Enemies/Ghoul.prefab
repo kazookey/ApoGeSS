@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6356541521639988505}
   - component: {fileID: 6249607198182551905}
   - component: {fileID: 7384356137553014411}
+  - component: {fileID: 7623857270664406018}
   m_Layer: 6
   m_Name: Ghoul
   m_TagString: Enemy
@@ -178,3 +179,25 @@ MonoBehaviour:
   maxHP: 3
   moveSpeed: 1.5
   isStunned: 0
+--- !u!95 &7623857270664406018
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6374863167755638249}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2fa0713ef5c74344a9641781af7aafda, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
