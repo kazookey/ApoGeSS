@@ -23,6 +23,8 @@ public class HiredDefender : MonoBehaviour
     private bool isFleeing = false;
 
     private Transform targetEnemy;
+    private float patrolDirection = 1f; // 1 = up, -1 = down
+
 
     void Start()
     {
@@ -97,30 +99,28 @@ public class HiredDefender : MonoBehaviour
     {
         if (targetEnemy == null)
         {
-            // Simple PATROL (up/down bouncing)
-            float newY = transform.position.y + moveSpeed * Time.deltaTime;
+            // PATROL (up/down bouncing)
+            float newY = transform.position.y + moveSpeed * patrolDirection * Time.deltaTime;
 
-            // If going past range, reverse direction
-            if (newY > maxY || newY < minY)
-                moveSpeed *= -1;
+            // If going past range, reverse direction and clamp
+            if (newY > maxY)
+            {
+                newY = maxY;
+                patrolDirection = -1f;
+            }
+            else if (newY < minY)
+            {
+                newY = minY;
+                patrolDirection = 1f;
+            }
 
-            transform.position = new Vector3(
-                transform.position.x,
-                Mathf.Clamp(newY, minY, maxY),
-                transform.position.z
-            );
-
+            transform.position = new Vector3(transform.position.x, newY, transform.position.z);
             return;
         }
 
-        // Move up/down directly toward the enemy with minimal smoothing
+        // Move toward enemy vertically
         float direction = Mathf.Sign(targetEnemy.position.y - transform.position.y);
-
-        transform.position += new Vector3(
-            0,
-            direction * moveSpeed * Time.deltaTime,
-            0
-        );
+        transform.position += new Vector3(0, direction * moveSpeed * Time.deltaTime, 0);
 
         // Clamp to allowed Y range
         float clampedY = Mathf.Clamp(transform.position.y, minY, maxY);

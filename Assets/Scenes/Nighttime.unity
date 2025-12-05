@@ -5765,7 +5765,7 @@ MonoBehaviour:
   defenderSpawnPoints:
   - {fileID: 1069502329}
   - {fileID: 2025347945}
-  nightdurationSeconds: 20
+  nightdurationSeconds: 150
   currentState: 0
 --- !u!4 &957307909
 Transform:
@@ -6039,7 +6039,7 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 100
   hpImage: {fileID: 1656680466}
-  damageCooldown: 0.25
+  damageCooldown: 0.15
 --- !u!1001 &1106589384
 PrefabInstance:
   m_ObjectHideFlags: 0
